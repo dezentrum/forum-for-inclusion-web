@@ -1,0 +1,5 @@
+# Ignore artifacts:
+README.md
+.next
+build
+coverage
