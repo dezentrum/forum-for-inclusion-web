@@ -1,8 +1,45 @@
+import getConfig from 'next/config'
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+// ...holds access token
+const { serverRuntimeConfig } = getConfig()
+
+interface HomeProps {
+  formTitles: string[];
+}
+
+export async function getStaticProps() {
+  // ...step 2: fetch some data from VideoAsk API
+  const headers = new Headers();
+  headers.append("Authorization", `Bearer ${serverRuntimeConfig.store.token}`);
+  
+  var requestOptions: RequestInit = {
+    method: 'GET',
+    headers,
+    redirect: 'follow'
+  };
+
+  const res = await fetch(`${process.env.VIDEOASK_API_BASE_URL}/forms?limit=0&offset=0&title=`, requestOptions);
+  const data = await res.json();
+
+  const formTitles: string[] = [];
+
+  if (data.results) {
+    for (const form of data.results) {
+      formTitles.push(form.title)
+    }
+
+    formTitles.sort();
+  }
+
+  return {
+    props: { formTitles }
+  }
+}
+
+export default function Home(props: HomeProps) {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,6 +57,13 @@ export default function Home() {
           Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>
         </p>
+
+        <div>
+          <h2>All Forms</h2>
+          <ul>
+            {props.formTitles.map((formTitle) => <li key={formTitle}>{formTitle}</li>)}
+          </ul>
+        </div>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
