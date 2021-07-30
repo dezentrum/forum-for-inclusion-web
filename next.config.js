@@ -23,6 +23,9 @@ const getVideoaskAccessToken = (async () => {
   } else {
     console.error('Access Token could not be generated...')
   }
+
+  // ...save project root in order to access when saving files to /public folder (e.g. audio), ref: https://stackoverflow.com/questions/54436021/nextjs-public-folder
+  store.projectRoot = __dirname
  })()
 
 module.exports = {
