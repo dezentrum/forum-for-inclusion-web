@@ -2,37 +2,32 @@ import getConfig from 'next/config'
 import Head from "next/head";
 import Link from 'next/link'
 import styles from "../styles/Home.module.css";
+import { fetchForm } from '../utils/fetchForm';
+import { fetchForms } from '../utils/fetchForms';
 
 // ...holds access token
-const { serverRuntimeConfig } = getConfig()
+const nextConfig: NextConfig = getConfig()
 
 interface HomeProps {
   formTitles: string[];
 }
 
-export async function getStaticProps() {
-  // ...step 2: fetch some data from VideoAsk API
-  const headers = new Headers();
-  headers.append("Authorization", `Bearer ${serverRuntimeConfig.store.token}`);
-  
-  var requestOptions: RequestInit = {
-    method: 'GET',
-    headers,
-    redirect: 'follow'
-  };
+export interface NextConfig {
+  serverRuntimeConfig: { store: { token: string, projectRoot: string }};
+  reactStrictMode: boolean;
+}
 
-  const res = await fetch(`${process.env.VIDEOASK_API_BASE_URL}/forms?limit=0&offset=0&title=`, requestOptions);
-  const data = await res.json();
+export async function getStaticProps() {
+  if (process.env.NODE_ENV === 'production') {
+    const formIds = await fetchForms(nextConfig)
+    for (const formId of formIds) {
+      await fetchForm(nextConfig, formId)
+    }
+  }
+
+  // da musch du d'files reade mit 'fs'
 
   const formTitles: string[] = [];
-
-  if (data.results) {
-    for (const form of data.results) {
-      formTitles.push(form.title)
-    }
-
-    formTitles.sort();
-  }
 
   return {
     props: { formTitles }
@@ -58,9 +53,6 @@ export default function Home(props: HomeProps) {
 
         <div>
           <h2 className={styles.centeredText}>Other Pages</h2>
-          <Link href="/vote">
-            <a>Vote Example Page</a>
-          </Link>
         </div>
       </main>
 
