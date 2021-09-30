@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import getConfig from 'next/config'
 import Head from "next/head";
 import Link from 'next/link'
@@ -7,9 +9,11 @@ import { fetchForms } from '../utils/fetchForms';
 
 // ...holds access token
 const nextConfig: NextConfig = getConfig()
+const formsFileName: string = 'forms.json'
 
 interface HomeProps {
   formTitles: string[];
+  recordings: any[];
 }
 
 export interface NextConfig {
@@ -25,12 +29,66 @@ export async function getStaticProps() {
     }
   }
 
-  // da musch du d'files reade mit 'fs'
+  console.log(nextConfig.serverRuntimeConfig.store.projectRoot)
 
-  const formTitles: string[] = [];
+  // Read forms file
+  const forms: any = JSON.parse(fs.readFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formsFileName), { encoding:'utf8' }));
+  const formTitles: string[] = forms.results.map((result: any): string => {
+    return result.title
+  })
+
+  const entries: any = fs.readdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', '/'), { withFileTypes: true });
+  const folders = entries.filter((folder: any) => folder.isDirectory());
+
+  const audioFolders = await folders.flatMap((folder: any) => {
+    const allFolders = fs.readdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', folder.name), { withFileTypes: true }).filter((folder: any) => folder.isDirectory())
+    const subFolders =  allFolders.map((subFolder):any => {
+      // console.log(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', folder.name, subFolder.name))
+      return {
+        absolutePath: path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', folder.name, subFolder.name),
+        relativePath: path.join('public', 'forms', folder.name, subFolder.name),
+        dirent: subFolder
+      }
+    })
+    return subFolders
+  })
+
+
+  const allFiles = audioFolders.flatMap((recordingFolder: { id: string, absolutePath: string, relativePath: string}) => {
+    return fs.readdirSync(recordingFolder.absolutePath, { withFileTypes: true }).filter((folder: any) => folder.isFile()).flatMap((file:any ) => {
+      return { name: file.name, absolutePath: path.join(recordingFolder.absolutePath, file.name ), relativePath: path.join(recordingFolder.relativePath, file.name ) }
+    })
+  })
+
+
+  let recordings: string[] = allFiles.flatMap((file: any) => {
+    let recording: { id: string, absolutePath: string, author: string, relativePath: string } = { id: '', absolutePath: '', relativePath: '', author: '' }
+    if(path.parse(file.name).ext === '.mp3') {
+      recording.id = file.name;
+      recording.absolutePath = file.absolutePath
+      recording.relativePath = file.relativePath
+      allFiles.forEach((file: any) => {
+        if(path.parse(file.name).ext === '.json') {
+          const recordingData = JSON.parse(fs.readFileSync(file.absolutePath, { encoding: 'utf8' })).results;
+          recordingData.forEach((rec: any) => {
+            if (rec.media_id === path.parse(recording.id).name) {
+              recording.author = rec.contact_name
+            }
+          })
+        }
+      })
+      return recording
+    }
+  })
+
+  recordings = recordings.filter((recording: any) => {
+    return recording !== undefined
+  })
+
+  console.log(recordings)
 
   return {
-    props: { formTitles }
+    props: { formTitles, recordings }
   }
 }
 
@@ -52,7 +110,15 @@ export default function Home(props: HomeProps) {
         </div>
 
         <div>
-          <h2 className={styles.centeredText}>Other Pages</h2>
+          <h2 className={styles.centeredText}>Recordings</h2>
+          <ul>
+            {props.recordings.map((rec) => (
+              <li key={rec.id}>
+                {rec.author}
+                <audio controls src={`/${rec.relativePath}`}></audio>
+              </li>
+            ))}
+          </ul>
         </div>
       </main>
 
