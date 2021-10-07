@@ -29,8 +29,6 @@ export async function getStaticProps() {
     }
   }
 
-  console.log(nextConfig.serverRuntimeConfig.store.projectRoot)
-
   // Read forms file
   const forms: any = JSON.parse(fs.readFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formsFileName), { encoding:'utf8' }));
   const formTitles: string[] = forms.results.map((result: any): string => {
@@ -43,7 +41,6 @@ export async function getStaticProps() {
   const audioFolders = await folders.flatMap((folder: any) => {
     const allFolders = fs.readdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', folder.name), { withFileTypes: true }).filter((folder: any) => folder.isDirectory())
     const subFolders =  allFolders.map((subFolder):any => {
-      // console.log(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', folder.name, subFolder.name))
       return {
         absolutePath: path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', folder.name, subFolder.name),
         relativePath: path.join('public', 'forms', folder.name, subFolder.name),
@@ -53,13 +50,11 @@ export async function getStaticProps() {
     return subFolders
   })
 
-
   const allFiles = audioFolders.flatMap((recordingFolder: { id: string, absolutePath: string, relativePath: string}) => {
     return fs.readdirSync(recordingFolder.absolutePath, { withFileTypes: true }).filter((folder: any) => folder.isFile()).flatMap((file:any ) => {
       return { name: file.name, absolutePath: path.join(recordingFolder.absolutePath, file.name ), relativePath: path.join(recordingFolder.relativePath, file.name ) }
     })
   })
-
 
   let recordings: string[] = allFiles.flatMap((file: any) => {
     let recording: { id: string, absolutePath: string, author: string, relativePath: string } = { id: '', absolutePath: '', relativePath: '', author: '' }
@@ -84,8 +79,6 @@ export async function getStaticProps() {
   recordings = recordings.filter((recording: any) => {
     return recording !== undefined
   })
-
-  console.log(recordings)
 
   return {
     props: { formTitles, recordings }
