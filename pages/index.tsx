@@ -3,7 +3,7 @@ import * as path from 'path';
 import getConfig from 'next/config'
 import Head from "next/head";
 import Link from 'next/link'
-import styles from "../styles/Home.module.css";
+import styles from "./Home.module.css";
 import { fetchForm } from '../utils/fetchForm';
 import { fetchForms } from '../utils/fetchForms';
 
@@ -95,24 +95,9 @@ export default function Home(props: HomeProps) {
       </Head>
 
       <main className={styles.main}>
-        <div>
-          <h2 className={styles.centeredText}>All Forms</h2>
-          <ul>
-            {props.formTitles.map((formTitle) => <li key={formTitle}>{formTitle}</li>)}
-          </ul>
-        </div>
-
-        <div>
-          <h2 className={styles.centeredText}>Recordings</h2>
-          <ul>
-            {props.recordings.map((rec) => (
-              <li key={rec.id}>
-                {rec.author}
-                <audio controls src={`/${rec.relativePath}`}></audio>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Link href="/feed">
+          <span>Anhören</span>
+        </Link>
       </main>
 
       <footer className={styles.footer}></footer>
