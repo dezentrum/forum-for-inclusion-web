@@ -20,6 +20,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <h1 className={ headings.headingBig }>Forum for Inclusion</h1>
         <Link href="/feed">
           <span>Anhören</span>
         </Link>
