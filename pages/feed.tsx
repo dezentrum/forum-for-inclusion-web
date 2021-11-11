@@ -126,7 +126,7 @@ export default function Feed({ recordings}: FeedProps) {
 
       <main className={styles.main}>
 
-        <h2>Votes</h2>
+        <h2 className={headings.headingBig}>Meinungen Ausgeschlossener</h2>
         <select onChange={(event) => setSelectedVoting(event?.target.value)}>
             {Array.from(votingNames.values()).map((votingName) => <option key={votingName}>{votingName}</option>)}
         </select>
