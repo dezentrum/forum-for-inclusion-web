@@ -10,6 +10,14 @@ import headings from "../styles/Typo.module.scss"
 import { fetchForm } from '../utils/fetchForm';
 import { fetchForms } from '../utils/fetchForms';
 
+// ...holds access token
+const nextConfig: NextConfig = getConfig();
+
+export interface NextConfig {
+  serverRuntimeConfig: { store: { token: string, projectRoot: string }};
+  reactStrictMode: boolean;
+}
+
 export default function Home() {
   return (
     <div className={styles.container}>
