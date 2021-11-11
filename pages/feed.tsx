@@ -2,11 +2,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import getConfig from 'next/config'
 import Head from "next/head";
-import Link from 'next/link'
-import styles from "./Home.module.css";
+import Link from 'next/link';
+
+import styles from '../styles/Home.module.scss';
+import headings from "../styles/Typo.module.scss"
+
 import { fetchForm } from '../utils/fetchForm';
 import { fetchForms } from '../utils/fetchForms';
-import { Recording } from './models/types';
+import { Recording } from '../models/types';
 
 import React, { useMemo, useState } from 'react';
 
