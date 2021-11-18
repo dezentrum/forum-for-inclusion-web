@@ -5,17 +5,22 @@
 @import 'mixins/responsive-property';
 @import 'sass-mq';
 @import 'boot/boot';
+@import 'webfonts';
 
 :root {
   // colors
   --background: #{$color-black-grey};
   --text: #{$color-white};
   --brand: #{$color-poison-green};
+  --off-white: #{$color-light-grey};
 
   // typography
-  --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  --font-family-heading: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --font-family: 'Everett Medium', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --font-family-heading: 'Everett Extra Bold', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-size: #{$global-font-size};
+  --font-size-huge: 48px;
+  --font-size-large: 32px;
+  --font-size-small: 14px;
   --line-height: #{$global-line-height};
 }
 
@@ -37,4 +42,9 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+::-webkit-media-controls-enclosure {
+  background-color: var(--off-white);
+  border-radius: 10px;
 }

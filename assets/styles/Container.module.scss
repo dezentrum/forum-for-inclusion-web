@@ -1,0 +1,11 @@
+@import 'sass-mq';
+@import 'variables/breakpoints';
+@import 'mixins/font-size';
+@import 'mixins/responsive-property';
+
+.pageContainer {
+    width: 100%;
+    max-width: 792px;
+    padding: 8px;
+    margin: 0 auto;
+}
