@@ -5,8 +5,9 @@ import Head from "next/head";
 import Link from 'next/link';
 import Audio from '../components/audio';
 
-import styles from '../styles/Home.module.scss';
-import headings from "../styles/Typo.module.scss"
+import styles from '../assets/styles/Feed.module.scss';
+import headings from "../assets/styles/Typo.module.scss"
+import container from "../assets/styles/Container.module.scss"
 
 import { fetchForm } from '../utils/fetchForm';
 import { fetchForms } from '../utils/fetchForms';
