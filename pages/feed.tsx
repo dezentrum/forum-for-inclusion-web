@@ -3,6 +3,7 @@ import * as path from 'path';
 import getConfig from 'next/config'
 import Head from "next/head";
 import Link from 'next/link';
+import Audio from '../components/audio';
 
 import styles from '../styles/Home.module.scss';
 import headings from "../styles/Typo.module.scss"
@@ -125,23 +126,17 @@ export default function Feed({ recordings}: FeedProps) {
       </Head>
 
       <main className={styles.main}>
-
-        <h2 className={headings.headingBig}>Meinungen Ausgeschlossener</h2>
-        <select onChange={(event) => setSelectedVoting(event?.target.value)}>
-            {Array.from(votingNames.values()).map((votingName) => <option key={votingName}>{votingName}</option>)}
-        </select>
-
-        <h2>Recordings</h2>
-         {filteredRecordings.map((recording) => 
-             recording.path && <div key={recording.path}>
-
-                <audio controls preload='metadata' src={recording.path}></audio>
-                <ul>
-                    {recording.tags?.map((tag) => <li key={tag}>{tag}</li>)}
-                    <li>{recording.voting}</li>
-                </ul>
-            </div>
-         )}
+        <div className={container.pageContainer}>
+          <h1 className={headings.headingBig}>Meinungen Ausgeschlossener</h1>
+          <select onChange={(event) => setSelectedVoting(event?.target.value)}>
+              {Array.from(votingNames.values()).map((votingName) => <option key={votingName}>{votingName}</option>)}
+          </select>
+          <div>
+            {filteredRecordings.map((recording) =>
+              recording.path && <Audio key={recording.path} recording={recording}></Audio>
+              )}
+          </div>
+        </div>
       </main>
 
       <footer className={styles.footer}></footer>
