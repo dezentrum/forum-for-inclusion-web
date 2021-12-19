@@ -1,38 +1,49 @@
-import React, { useRef, useEffect } from 'react'
-import { Recording } from '../models/types';
+import React, { useRef, useEffect, useState } from "react";
+import { Recording } from "../models/types";
 // @ts-ignore
-import WaveSurfer from 'wavesurfer.js'
+import WaveSurfer from "wavesurfer.js";
 
-
-import audio from './audio.module.scss'
-
-import { Waveform } from './waveform'
+import audio from "./audio.module.scss";
 
 export default function Audio({ recording }: { recording: Recording }) {
-    const waveformRef = useRef(null);
+  const waveformRef = useRef(null);
+  const [wavesurfer, setWavesurfer] = useState<any | undefined>(undefined);
 
-    useEffect(() => {
-        if(waveformRef.current) {
-            console.log(WaveSurfer.create)
-            const wavesurfer = WaveSurfer.create({
-                container: waveformRef.current,
-            });
-        }
-    }, []);
+  useEffect(() => {
+    if (waveformRef.current) {
+      const wavesurfer = WaveSurfer.create({
+        container: waveformRef.current,
+        barWidth: 2,
+        barHeight: 1,
+        barRadius: 1,
+      });
+      wavesurfer.load(recording.path);
+      setWavesurfer(wavesurfer);
+    }
+  }, [recording.path]);
 
-    return (
-        <div className={audio.container}>
-            <Waveform />
-            <audio className={audio.player} preload="metadata" controls src={recording.path}></audio>
-            <div className={audio.meta}>
-            <div ref={waveformRef}></div>
-                <ul className={audio.tags}>
-                    {recording.tags?.map((tag: string) => {
-                        <li className={audio.tagItem} key={tag}>{tag}</li>
-                    })}
-                </ul>
-                <span className={audio.tagItem}>{recording.voting}</span>
-            </div>
-        </div>
-    )
+  const togglePlay = () => {
+    if (wavesurfer) {
+      wavesurfer.isPlaying() ? wavesurfer.pause() : wavesurfer.play();
+    }
+  };
+
+  return (
+    <div className={audio.container}>
+      <div>
+        <button onClick={togglePlay}>Play / Pause</button>
+        <div ref={waveformRef}></div>
+      </div>
+      <div className={audio.meta}>
+        <ul className={audio.tags}>
+          {recording.tags?.map((tag: string) => {
+            <li className={audio.tagItem} key={tag}>
+              {tag}
+            </li>;
+          })}
+        </ul>
+        <span className={audio.tagItem}>{recording.voting}</span>
+      </div>
+    </div>
+  );
 }
