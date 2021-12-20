@@ -13,9 +13,19 @@ export default function Audio({ recording }: { recording: Recording }) {
     if (waveformRef.current) {
       const wavesurfer = WaveSurfer.create({
         container: waveformRef.current,
-        barWidth: 2,
-        barHeight: 1,
-        barRadius: 1,
+        height: 44,
+        barWidth: 3,
+        barHeight: 0.2,
+        barMinHeight: 10,
+        barRadius: 3,
+        barGap: 2,
+        normalize: true,
+        progressColor: 'rgba(0, 0, 0, 0.6)',
+        waveColor: 'rgba(44, 43, 36, 0.4)',
+        cursorColor: 'transparent',
+        cursorWidth: 0,
+        responsive: true,
+        interact: false
       });
       wavesurfer.load(recording.path);
       setWavesurfer(wavesurfer);
@@ -24,15 +34,14 @@ export default function Audio({ recording }: { recording: Recording }) {
 
   const togglePlay = () => {
     if (wavesurfer) {
-      wavesurfer.isPlaying() ? wavesurfer.pause() : wavesurfer.play();
+      wavesurfer.playPause();
     }
   };
 
   return (
     <div className={audio.container}>
-      <div>
-        <button onClick={togglePlay}>Play / Pause</button>
-        <div ref={waveformRef}></div>
+      <div className={audio.player} onClick={togglePlay}>
+        <div ref={waveformRef} className={audio.playerWaveform}></div>
       </div>
       <div className={audio.meta}>
         <ul className={audio.tags}>

@@ -13,8 +13,20 @@
 }
 
 .player {
-    display: flex;
-    width: 100%;
+    background-color: var(--off-white);
+    display: block;
+    border-radius: 7px;
+}
+
+.playerWaveform {
+
+    wave {
+
+        > wave {
+            background-color: var(--brand);
+            border-radius: 7px;
+        }
+    }
 }
 
 .meta {
