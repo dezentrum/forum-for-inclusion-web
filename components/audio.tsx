@@ -5,7 +5,7 @@ import WaveSurfer from "wavesurfer.js";
 
 import audio from "./audio.module.scss";
 
-export default function Audio({ recording }: { recording: Recording }) {
+export default function Audio({ recording, index }: { recording: Recording, index: number }) {
   const waveformRef = useRef(null);
   const [wavesurfer, setWavesurfer] = useState<any | undefined>(undefined);
 
@@ -29,8 +29,12 @@ export default function Audio({ recording }: { recording: Recording }) {
       });
       wavesurfer.load(recording.path);
       setWavesurfer(wavesurfer);
+      wavesurfer.on('finish', () => {
+        console.log('finished')
+      })
     }
   }, [recording.path]);
+
 
   const togglePlay = () => {
     if (wavesurfer) {
@@ -39,7 +43,7 @@ export default function Audio({ recording }: { recording: Recording }) {
   };
 
   return (
-    <div className={audio.container}>
+    <div className={audio.container} style={{zIndex: -1 * index}}>
       <div className={audio.player} onClick={togglePlay}>
         <div ref={waveformRef} className={audio.playerWaveform}></div>
       </div>

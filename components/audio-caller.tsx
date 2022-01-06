@@ -8,6 +8,6 @@ const Audio = dynamic(
     { ssr: false }
 )
 
-export const AudioCaller =  ({ recording }: { recording: Recording }) => {
-    return <Audio recording={recording} />
+export const AudioCaller =  ({ recording, index }: { recording: Recording, index: number }) => {
+    return <Audio recording={recording} index={index}/>
 }
