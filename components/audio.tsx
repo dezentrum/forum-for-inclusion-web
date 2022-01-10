@@ -5,9 +5,14 @@ import WaveSurfer from "wavesurfer.js";
 
 import audio from "./audio.module.scss";
 
-export default function Audio({ recording, index }: { recording: Recording, index: number }) {
+export default function Audio({ recordings }: { recordings: Recording[] }) {
   const waveformRef = useRef(null);
   const [wavesurfer, setWavesurfer] = useState<any | undefined>(undefined);
+  const [selectedRecording, setSelectedRecording] = useState<Recording>(recordings[0]);
+
+  useEffect(() => {
+    setSelectedRecording(recordings[0])
+  }, [recordings])
 
   useEffect(() => {
     if (waveformRef.current) {
@@ -27,13 +32,35 @@ export default function Audio({ recording, index }: { recording: Recording, inde
         responsive: true,
         interact: false
       });
-      wavesurfer.load(recording.path);
       setWavesurfer(wavesurfer);
-      wavesurfer.on('finish', () => {
-        console.log('finished')
-      })
     }
-  }, [recording.path]);
+  }, []);
+
+  const findCurrentIndex = () => {
+    return recordings.findIndex((recording) => recording.path === selectedRecording.path)
+  }
+
+  const skipToNextRecording = () => {
+    wavesurfer.un('finish', skipToNextRecording)
+    if (recordings[findCurrentIndex() + 1]) {
+      setSelectedRecording(recordings[findCurrentIndex() + 1])
+    } else {
+      setSelectedRecording(recordings[0])
+    }
+  }
+
+  useEffect(() => {
+    if (wavesurfer) {
+      if (selectedRecording.path) {
+        wavesurfer.load(selectedRecording.path);
+
+        wavesurfer.on('ready', () => {
+          wavesurfer.play()
+          wavesurfer.on('finish', skipToNextRecording)
+        })
+      }
+    }
+  }, [selectedRecording, wavesurfer]);
 
 
   const togglePlay = () => {
@@ -43,20 +70,23 @@ export default function Audio({ recording, index }: { recording: Recording, inde
   };
 
   return (
-    <div className={audio.container} style={{zIndex: -1 * index}}>
+    <div className={audio.container}>
       <div className={audio.player} onClick={togglePlay}>
         <div ref={waveformRef} className={audio.playerWaveform}></div>
       </div>
       <div className={audio.meta}>
         <ul className={audio.tags}>
-          {recording.tags?.map((tag: string) => {
+          {selectedRecording.tags?.map((tag: string) => {
             <li className={audio.tagItem} key={tag}>
               {tag}
             </li>;
           })}
         </ul>
-        <span className={audio.tagItem}>{recording.voting}</span>
+        <span className={audio.tagItem}>{selectedRecording.voting}</span>
       </div>
+
+      <button onClick={togglePlay}>Play / Pause</button>
+      <button onClick={() => skipToNextRecording()}>Next</button>
     </div>
   );
 }

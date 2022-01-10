@@ -128,15 +128,13 @@ export default function Feed({ recordings}: FeedProps) {
 
       <main className={styles.main}>
         <div className={container.pageContainer}>
-          {/* <h1 className={headings.headingBig}>Meinungen Ausgeschlossener</h1>
+          <h1 className={headings.headingBig}>Meinungen Ausgeschlossener</h1>
           <select onChange={(event) => setSelectedVoting(event?.target.value)}>
               {Array.from(votingNames.values()).map((votingName) => <option key={votingName}>{votingName}</option>)}
           </select>
           <div className={container.audioFeedContainer }>
-            {filteredRecordings.map((recording, i) =>
-              recording.path && <AudioCaller key={recording.path} recording={recording} index={i}></AudioCaller>
-            )}
-          </div> */}
+            <AudioCaller recordings={filteredRecordings} />
+          </div>
         </div>
       </main>
 
