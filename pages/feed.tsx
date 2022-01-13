@@ -2,8 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import getConfig from 'next/config'
 import Head from "next/head";
-import Link from 'next/link';
-import Audio from '../components/audio';
+import { AudioCaller } from '../components/audio-caller';
 
 import styles from '../assets/styles/Feed.module.scss';
 import headings from "../assets/styles/Typo.module.scss"
@@ -14,6 +13,7 @@ import { fetchForms } from '../utils/fetchForms';
 import { Recording } from '../models/types';
 
 import React, { useMemo, useState } from 'react';
+
 
 // ...holds access token
 const nextConfig: NextConfig = getConfig()
@@ -132,10 +132,8 @@ export default function Feed({ recordings}: FeedProps) {
           <select onChange={(event) => setSelectedVoting(event?.target.value)}>
               {Array.from(votingNames.values()).map((votingName) => <option key={votingName}>{votingName}</option>)}
           </select>
-          <div>
-            {filteredRecordings.map((recording) =>
-              recording.path && <Audio key={recording.path} recording={recording}></Audio>
-              )}
+          <div className={container.audioFeedContainer }>
+            <AudioCaller recordings={filteredRecordings} />
           </div>
         </div>
       </main>
