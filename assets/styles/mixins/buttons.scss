@@ -1,0 +1,47 @@
+@import '../variables/global.scss';
+
+%reset-button {
+    cursor: pointer;
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    appearance: none;
+}
+
+%button {
+    &--primary {
+        @extend %reset-button;
+        position: relative;
+        background-color: var(--brand);
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
+        padding: var(--s-component);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-black;
+
+        &::before {
+            content: "";
+            width: 52px;
+            height: 100%;
+            border-radius: 14px - 4px;
+            background-color: rgba(0,0,0,0.12);
+            transition: 0.1s all ease-out;
+        }
+        
+        &:hover {
+            &::before {
+                background-color: rgba(0,0,0,0.2 );
+            }
+        }
+        
+        span {
+            margin-left: var(--s-component);
+        }
+    }
+
+}

@@ -16,6 +16,7 @@
     @include font-size(22px);
     @include resp(font-size, (phone: 30px, phone-plus: 34px, phablet: 38px, tablet: 42px, desktop: 44px));
     font-size: 48px;
-    color: var(--brand);
+    // color: var(--brand);
     font-family: var(--font-family-heading);
+    // margin-bottom: 140px;
 }

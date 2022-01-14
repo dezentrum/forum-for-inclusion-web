@@ -1,0 +1,68 @@
+@import '../assets/styles/variables/global.scss';
+
+.container {
+    background-color: $color-white;
+    color: $color-black;
+    padding: var(--s-component);
+}
+
+.inner {
+    background-color: var(--brand);
+    border-radius: 14px;
+    padding: 56px 0;
+}
+
+.text {
+    margin-top: 1em;
+}
+
+.statsWrap {
+    position: relative;
+    display: flex;
+    margin-top: 1em;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    background-color: $color-white;
+    border-radius: 14px;
+    padding: var(--s-component);
+    width: 100%;
+}
+
+.statsIncluded {
+    width: calc(63% - 2px);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--off-white);
+    border-radius: 10px;
+    padding: 9px 20px 11px;
+}
+
+.statsExcluded {
+    width: calc(37% - 2px);
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: var(--brand);
+    padding: 9px 20px 11px;
+}
+
+.statsNumber {
+    font-size: 40px;
+}
+
+.statsLabel {
+}
+
+.statsSource {
+    position: absolute;
+    right: -4.5em;
+    top: 0;
+    transform: rotate(90deg);
+    transform-origin: 0;
+    color: rgba($color-black, 0.2);
+    text-decoration: underline;
+    // display: none;
+}

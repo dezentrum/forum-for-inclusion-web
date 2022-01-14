@@ -4,6 +4,7 @@ import { Recording } from "../models/types";
 import WaveSurfer from "wavesurfer.js";
 
 import audio from "./audio.module.scss";
+import container from "../assets/styles/Container.module.scss"
 
 export default function Audio({ recordings }: { recordings: Recording[] }) {
   const waveformRef = useRef(null);
@@ -18,12 +19,12 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
     if (waveformRef.current) {
       const wavesurfer = WaveSurfer.create({
         container: waveformRef.current,
-        height: 44,
+        height: 64,
         barWidth: 3,
         barHeight: 0.2,
         barMinHeight: 10,
         barRadius: 3,
-        barGap: 2,
+        barGap: 3,
         normalize: true,
         progressColor: 'rgba(0, 0, 0, 0.6)',
         waveColor: 'rgba(44, 43, 36, 0.4)',
@@ -66,27 +67,31 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
   const togglePlay = () => {
     if (wavesurfer) {
       wavesurfer.playPause();
+      console.log(wavesurfer.isPlaying())
     }
   };
 
   return (
-    <div className={audio.container}>
-      <div className={audio.player} onClick={togglePlay}>
-        <div ref={waveformRef} className={audio.playerWaveform}></div>
+    <div>
+      <div className={audio.container}>
+        <div className={audio.player} onClick={togglePlay}>
+          <div ref={waveformRef} className={audio.playerWaveform}></div>
+        </div>
+        <div className={audio.meta}>
+          <ul className={audio.tags}>
+            {selectedRecording.tags?.map((tag: string) => {
+              <li className={audio.tagItem} key={tag}>
+                {tag}
+              </li>;
+            })}
+          </ul>
+          <span className={audio.tagItem}>{selectedRecording.voting}</span>
+        </div>
       </div>
-      <div className={audio.meta}>
-        <ul className={audio.tags}>
-          {selectedRecording.tags?.map((tag: string) => {
-            <li className={audio.tagItem} key={tag}>
-              {tag}
-            </li>;
-          })}
-        </ul>
-        <span className={audio.tagItem}>{selectedRecording.voting}</span>
+      <div className={audio.playerButtons}>
+        {/* <button className={audio.playerButtonPlayStop} onClick={togglePlay}></button> */}
+        <button className={audio.playerButtonForward} onClick={() => skipToNextRecording()}></button>
       </div>
-
-      <button onClick={togglePlay}>Play / Pause</button>
-      <button onClick={() => skipToNextRecording()}>Next</button>
     </div>
   );
 }

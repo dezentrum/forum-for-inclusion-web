@@ -1,0 +1,46 @@
+@import '../assets/styles/variables/global.scss';
+
+.wrap {
+    + .wrap {
+        margin-top: var(--s-small);
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-white;
+    border-radius: 14px;
+    padding: var(--s-component);
+    opacity: 0.3;
+}
+
+.waveform {
+    background-color: var(--off-white);
+    border-radius: 10px;
+    height: 64px;
+    width: 100%;
+}
+
+.tags {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--s-component);
+}
+
+.tagList {
+    display: flex;
+
+    &:first-child {
+        .tagItem {
+            margin-left: var(--s-component);
+        }
+    }
+}
+
+.tagItem {
+    background-color: var(--off-white);
+    border-radius: 10px;
+    height: 25px;
+    width: 100px;
+}
