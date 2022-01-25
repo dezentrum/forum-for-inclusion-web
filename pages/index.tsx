@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Hero } from '../components/hero';
 import { AudioPlaceholder } from '../components/audio-placeholder';
 
-import styles from '../assets/styles/Home.module.scss';
+import page from '../assets/styles/Home.module.scss';
 import container from "../assets/styles/Container.module.scss"
 import typo from "../assets/styles/Typo.module.scss"
 import button from "../assets/styles/Button.module.scss"
@@ -32,19 +32,24 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className={page.main}>
         <Hero></Hero>
         <div className={container.pageContainer}>
-          <p className={typo.text}>«Forum for Inclusion» gibt diesen Personen eine Stimme. Keine demokratische, sondern die Möglichkeit ihre wortwörtliche Stimme zu aktuellen Abstimmungen zu geben.</p>
-          <AudioPlaceholder></AudioPlaceholder>
-          <AudioPlaceholder></AudioPlaceholder>
-          <AudioPlaceholder></AudioPlaceholder>
-          <AudioPlaceholder></AudioPlaceholder>
-          <Link href="/feed">
-            <div className={button.primaryPlay}>
-              <span>Anhören</span>
+          <div className={page.pageContent}>
+            <p className={typo.text}>«Forum for Inclusion» gibt diesen Personen eine Stimme. Keine demokratische, sondern die Möglichkeit ihre wortwörtliche Stimme zu aktuellen Abstimmungen zu geben.</p>
+            <div className={page.pagePlaceholders}>
+              <AudioPlaceholder></AudioPlaceholder>
+              <AudioPlaceholder></AudioPlaceholder>
+              <AudioPlaceholder></AudioPlaceholder>
+              <div className={page.pageButtonContainer}>
+                <Link href="/feed">
+                  <div className={button.primaryPlay}>
+                    <span>Anhören</span>
+                  </div>
+                </Link>
+              </div>
             </div>
-          </Link>
+          </div>
         </div>
 
       </main>

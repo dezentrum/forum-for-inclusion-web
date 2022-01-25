@@ -1,4 +1,5 @@
 @import '../assets/styles/variables/global.scss';
+@import 'sass-mq';
 
 .container {
     background-color: $color-white;
@@ -8,7 +9,7 @@
 
 .inner {
     background-color: var(--brand);
-    border-radius: 14px;
+    border-radius: var(--r-outer);
     padding: 56px 0;
 }
 
@@ -20,13 +21,16 @@
     position: relative;
     display: flex;
     margin-top: 1em;
+    @include mq($until: desktop) {
+        flex-direction: column;
+    }
 }
 
 .stats {
     display: flex;
     justify-content: space-between;
     background-color: $color-white;
-    border-radius: 14px;
+    border-radius: var(--r-outer);
     padding: var(--s-component);
     width: 100%;
 }
@@ -36,7 +40,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--off-white);
-    border-radius: 10px;
+    border-radius: var(--r-inner);
     padding: 9px 20px 11px;
 }
 
@@ -44,7 +48,7 @@
     width: calc(37% - 2px);
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: var(--r-inner);
     background-color: var(--brand);
     padding: 9px 20px 11px;
 }
@@ -57,12 +61,14 @@
 }
 
 .statsSource {
-    position: absolute;
-    right: -4.5em;
-    top: 0;
-    transform: rotate(90deg);
-    transform-origin: 0;
     color: rgba($color-black, 0.2);
     text-decoration: underline;
-    // display: none;
+    @include mq($from: desktop) {
+        flex-direction: column;
+        position: absolute;
+        right: -4.5em;
+        top: 0;
+        transform: rotate(90deg);
+        transform-origin: 0;
+    }
 }

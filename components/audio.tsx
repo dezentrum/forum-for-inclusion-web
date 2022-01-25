@@ -67,7 +67,6 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
   const togglePlay = () => {
     if (wavesurfer) {
       wavesurfer.playPause();
-      console.log(wavesurfer.isPlaying())
     }
   };
 
@@ -89,7 +88,6 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
         </div>
       </div>
       <div className={audio.playerButtons}>
-        {/* <button className={audio.playerButtonPlayStop} onClick={togglePlay}></button> */}
         <button className={audio.playerButtonForward} onClick={() => skipToNextRecording()}></button>
       </div>
     </div>

@@ -4,10 +4,6 @@
     @extend %button--primary;
     width: auto;
 }
-.test {
-    @extend %button--primary;
-    width: auto;
-}
 
 .primaryPlay {
     @extend .primary;
@@ -28,5 +24,41 @@
         position: absolute;
         left: 24px;
         margin-top: 6px;
+        @include mq($until: desktop) {
+            top: 8px
+        }
+    }
+}
+
+.recordLink {
+    @extend .primary;
+
+    &:after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        left: calc(20px);
+        background-color: rgba($color-black, 0.6);
+        @include mq($until: desktop) {
+            top: 8px
+        }
+    }
+}
+
+.record {
+    @extend %button--secondary;
+    width: auto;
+
+    &:after {
+        content: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='10' fill='%23D20000' fill-opacity='0.6'/%3E%3C/svg%3E%0A");
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        @include mq($until: desktop) {
+            left: 15px;
+            top: 15px;
+        }
     }
 }

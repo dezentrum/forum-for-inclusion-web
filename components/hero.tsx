@@ -2,7 +2,7 @@ import hero from "./hero.module.scss";
 import container from "../assets/styles/Container.module.scss"
 import typo from  '../assets/styles/Typo.module.scss';
 
-export const Hero =  () => {
+export const Hero = () => {
     return (
         <div className={hero.container}>
             <div className={hero.inner}>

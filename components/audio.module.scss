@@ -8,7 +8,7 @@
     flex-direction: column;
     background-color: var(--background);
     color: var(--text);
-    border-radius: 14px;
+    border-radius: var(--r-outer);
     padding: var(--s-component);
     box-shadow: 0px 3.79009px 20px rgba(0, 0, 0, 0.12);
     margin-top: -9.4%;
@@ -40,7 +40,7 @@
 .player {
     background-color: var(--off-white);
     display: block;
-    border-radius: 10px;
+    border-radius: var(--r-inner);
 }
 
 .playerWaveform {
@@ -48,7 +48,7 @@
 
         > wave {
             background-color: var(--brand);
-            border-radius: 10px;
+            border-radius: var(--r-inner);
         }
     }
 }
@@ -68,7 +68,7 @@
     background-color: var(--off-white);
     font-size: var(--font-size-small);
     padding: 0.214em 0.714em 0.286em;
-    border-radius: 10px;
+    border-radius: var(--r-inner);
 }
 
 .tagItem + .tagItem {
@@ -100,6 +100,10 @@
     &::after {
         position: absolute;
         margin-right: -6px;
+        @include mq($until: desktop) {
+            margin-top: 4px;
+            margin-right: -4px;
+        }
         content: url("data:image/svg+xml,%3Csvg width='27' height='17' viewBox='0 0 27 17' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13 17V9.10714L0 17V0L13 7.89286V0L27 8.5L13 17Z' fill='black' fill-opacity='0.6'/%3E%3C/svg%3E%0A");
     }
 }

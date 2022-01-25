@@ -1,1 +1,21 @@
 @import 'variables/global';
+
+.pageContent {
+    padding: var(--s-medium) 0;
+}
+
+.pagePlaceholders {
+    position: relative;
+    margin-top: var(--s-medium);
+
+    .pageButtonContainer {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        padding-top: var(--s-medium);
+    }
+}

@@ -23,12 +23,38 @@
   --font-size-large: 32px;
   --font-size-small: 14px;
   --line-height: #{$global-line-height};
+  
+  @include mq($until: desktop) {
+    --font-size: 17px;
+    --font-size-huge: 30px;
+    --font-size-medium: 17px;
+    --font-size-large: 30px;
+    --font-size-small: 12px;
+  }
 
   // spacings
+  --s-huge: 120px;
   --s-big: 60px;
   --s-medium: 40px;
   --s-small: 8px;
   --s-component: 4px;
+
+  @include mq($until: desktop) {
+    --s-huge: 30px;
+    --s-big: 30px;
+    --s-medium: 30px;
+    --s-small: 6px;
+    --s-component: 3px;
+  }
+
+  // border radius
+  --r-outer: 14px;
+  --r-inner: 10px;
+
+  @include mq($until: desktop) {
+    --r-outer: 10px;
+    --r-inner: 7px;
+  }
 }
 
 
@@ -57,7 +83,6 @@ a {
 
 ::-webkit-media-controls-enclosure {
   background-color: var(--off-white);
-  border-radius: 10px;
+  border-radius: var(--r-inner);
 }
 
-  

@@ -4,14 +4,14 @@
     display: flex;
     background-color: rgba($color-white, 0.12);
     padding: var(--s-component);
-    border-radius: 14px;
+    border-radius: var(--r-outer);
     margin-bottom: var(--s-small);
 }
 
 .select {
     position: relative;
     background-color: rgba($color-black, 0.3);
-    border-radius: 10px;
+    border-radius: var(--r-inner);
     width: 100%;
     font-size: var(--font-size-medium);
     font-family: var(--font-family);
@@ -33,7 +33,7 @@
 .selectIcon {
     display: inline-flex;
     background-color: rgba($color-black, 0.3);
-    border-radius: 10px;
+    border-radius: var(--r-inner);
     margin-left: var(--s-component);
     width: 34px;
     justify-content: center;
