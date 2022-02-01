@@ -9,6 +9,7 @@ import typo from "../assets/styles/Typo.module.scss"
 import button from "../assets/styles/Button.module.scss"
 
 export default function Home() {
+  const testURL = 'https://dezentrum.com/teset'
   return (
     <div>
       <Head>

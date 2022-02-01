@@ -24,24 +24,21 @@ export default function Home() {
       <main>
         <div className={container.pageContainer}>
           <PageHeading title="Informieren"></PageHeading>
-          <Collapse heading="Volksinitiative «Ja zum Tier und Menschenversuchsverbot»">
+          <Collapse heading="Volksinitiative «Ja zum Schutz der Kinder und Jugendlichen vor Tabakwerbung»">
             <div>
-              Tierversuche sind in der Schweiz erlaubt. Sie werden eingesetzt, um Medikamente und Therapien zu entwickeln, mit denen Krankheiten besser behandelt werden können.
+              In der Schweiz darf heute mit gewissen Einschränkungen für Tabakprodukte geworben werden. Verboten sind Tabakwerbung in Radio und Fernsehen sowie Werbung, die sich gezielt an Minderjährige richtet. Eine Mehrheit der Kantone hat weitergehende Verbote erlassen, etwa für Tabakwerbung auf Plakaten und im Kino.
               <br />
               <br />
-              Die Schweiz hat eines der weltweit strengsten Gesetze für Tierversuche: Ein Tierversuch wird nur bewilligt, wenn die Ergebnisse nicht auf anderem Weg erzielt werden können. Die Forscherinnen und Forscher dürfen in ihren Versuchen mit nur so vielen Tieren arbeiten wie unbedingt nötig, und sie müssen deren Belastungen so gering wie möglich halten.
+              Die Initiative will Tabakwerbung überall dort verbieten, wo Kinder und Jugendliche sie sehen können, zum Beispiel in der Presse, auf Plakaten, im Internet, im Kino, in Kiosken oder an Veranstaltungen. Für elektronische Zigaretten würden die gleichen Regeln gelten. Erlaubt wäre weiterhin Werbung, die sich nur an Erwachsene richtet oder sich an Orten befindet, zu denen Minderjährige keinen Zugang haben.
               <br />
               <br />
-              Die Volksinitiative fordert ein Verbot von Tierversuchen. Produkte, die unter Anwendung von Tierversuchen entwickelt wurden, sollen zudem nicht mehr importiert werden dürfen. Die Initiative verlangt auch, dass Forschung, die ohne Tierversuche auskommt, mindestens dieselbe staatliche Unterstützung erhält wie heute diejenige mit Tierversuchen. Auch sogenannte Menschenversuche sollen verboten werden.
-              <br />
-              <br />
-              Bei Annahme der Initiative gäbe es in der Schweiz keine neuen Medikamente mehr, die mit Tierversuchen entwickelt werden. Die Forschung sowie die Entwicklung von Medikamenten oder anderen Produkten wie Pflanzenschutzmitteln würden eingeschränkt und möglicherweise ins Ausland verlagert.
+              Bundesrat und Parlament stellen der Initiative mit dem neuen Tabakproduktegesetz einen indirekten Gegenvorschlag gegenüber. Die neuen Bestimmungen würden Werbung für Tabakprodukte und elektronische Zigaretten auf Plakaten und im Kino verbieten. Auch dürften Tabakkonzerne keine Zigaretten mehr gratis abgeben oder internationale Veranstaltungen in der Schweiz sponsern. Das neue Tabakproduktegesetz kann unabhängig vom Ausgang der Abstimmung über die Volksinitiative in Kraft treten.
             </div>
             <LinkBlock link={"https://www.admin.ch/gov/de/start/dokumentation/abstimmungen/20220213/volksinitiative-ja-zum-tier-und-menschenversuchsverbot.html"}>
               Mehr Informationen (admin.ch)
             </LinkBlock>
           </Collapse>
-          <Link href="./volksinitiative-ja-zum-tier-und-menschenversuchsverbot/listen">
+          <Link href="./volksinitiative-ja-zum-schutz-der-kinder-und-jugendlichen-vor-tabakwerbung/listen">
             <div className={ button.primaryText }>
               <span>
                 Ich bin genug informiert, weiter geht’s

@@ -145,8 +145,8 @@ export default function Feed({ recordings}: FeedProps) {
           <div className={container.audioFeedContainer }>
             <AudioCaller recordings={filteredRecordings} />
           </div>
-          <Link href="./out">
-            <div className={ button.primaryText }> 
+          <Link href="./bundesgesetz-ueber-ein-massnahmenpaket-zugunsten-der-medien/out">
+            <div className={ button.primaryText }>
               <span>
                 Weiter, ich habe mir drei Aufnahmen angehört
               </span>

@@ -146,7 +146,7 @@ export default function Feed({ recordings}: FeedProps) {
             <AudioCaller recordings={filteredRecordings} />
           </div>
           <Link href="./out">
-            <div className={ button.primaryText }> 
+            <div className={ button.primaryText }>
               <span>
                 Weiter, ich habe mir drei Aufnahmen angehört
               </span>

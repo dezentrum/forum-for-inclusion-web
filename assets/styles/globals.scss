@@ -23,8 +23,8 @@
   --font-size-large: 32px;
   --font-size-small: 14px;
   --line-height: #{$global-line-height};
-  
-  @include mq($until: desktop) {
+
+  @include mq($until: tablet) {
     --font-size: 17px;
     --font-size-huge: 30px;
     --font-size-medium: 17px;
@@ -39,7 +39,7 @@
   --s-small: 8px;
   --s-component: 4px;
 
-  @include mq($until: desktop) {
+  @include mq($until: tablet) {
     --s-huge: 30px;
     --s-big: 30px;
     --s-medium: 30px;
@@ -51,7 +51,7 @@
   --r-outer: 14px;
   --r-inner: 10px;
 
-  @include mq($until: desktop) {
+  @include mq($until: tablet) {
     --r-outer: 10px;
     --r-inner: 7px;
   }

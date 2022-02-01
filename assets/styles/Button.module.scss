@@ -5,6 +5,10 @@
     width: auto;
 }
 
+.primaryText {
+    @extend %button--primary--textonly;
+}
+
 .primaryPlay {
     @extend .primary;
 
@@ -32,6 +36,7 @@
 
 .recordLink {
     @extend .primary;
+    margin-top: var(--s-small);
 
     &:after {
         content: "";
