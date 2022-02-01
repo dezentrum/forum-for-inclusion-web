@@ -94,8 +94,6 @@ interface FeedProps {
 }
 
 export default function Feed({ recordings}: FeedProps) {
-
-
     const [selectedVoting, setSelectedVoting] = useState<string | null>('All')
 
     const votingNames = new Set<string>(['All']);

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Recording } from "../models/types";
 // @ts-ignore
 import WaveSurfer from "wavesurfer.js";
@@ -10,11 +10,10 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
   const waveformRef = useRef(null);
   const [wavesurfer, setWavesurfer] = useState<any | undefined>(undefined);
   const [selectedRecording, setSelectedRecording] = useState<Recording>(recordings[0]);
+  const [hasStartedPlaying, setHasStartedPlaying] = useState<boolean>(false);
+  const [wavesurferHasLoaded, setWavesurferHasLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
-    setSelectedRecording(recordings[0])
-  }, [recordings])
-
+  // STEP 0: Load wavesurfer
   useEffect(() => {
     if (waveformRef.current) {
       const wavesurfer = WaveSurfer.create({
@@ -35,38 +34,67 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
       });
       setWavesurfer(wavesurfer);
     }
+    setWavesurferHasLoaded(true)
   }, []);
 
-  const findCurrentIndex = () => {
-    return recordings.findIndex((recording) => recording.path === selectedRecording.path)
-  }
+  // STEP 1: Load initial recording
+  useEffect(() => {
+    if (wavesurfer) {
+      wavesurfer.load(recordings[0].path);
+    }
+  }, [wavesurferHasLoaded, recordings, wavesurfer])
 
-  const skipToNextRecording = () => {
+  const findCurrentIndex = useCallback(() => {
+    return recordings.findIndex((recording) => recording.path === selectedRecording.path)
+  }, [recordings, selectedRecording.path])
+
+  const skipToNextRecording = useCallback(() => {
     wavesurfer.un('finish', skipToNextRecording)
-    if (recordings[findCurrentIndex() + 1]) {
+
+    if (recordings[findCurrentIndex() + 1]) { // if there is a next recording
+      // problem here
+      console.log('updating index... current: ', findCurrentIndex(), ', next: ' , findCurrentIndex() + 1)
       setSelectedRecording(recordings[findCurrentIndex() + 1])
     } else {
+      // problem not here
+      console.log('return to start')
       setSelectedRecording(recordings[0])
     }
-  }
+  }, [wavesurfer, findCurrentIndex, recordings])
+
+  const requestPlay = useCallback(() => {
+    if (!selectedRecording.path) {
+      skipToNextRecording()
+      return
+    }
+
+    if (hasStartedPlaying) {
+      wavesurfer.on('ready', () => {
+        wavesurfer.play()
+      })
+  
+      wavesurfer.on('finish', skipToNextRecording)
+  
+      wavesurfer.load(selectedRecording.path);
+    }
+  }, [skipToNextRecording, wavesurfer, hasStartedPlaying, selectedRecording.path])
 
   useEffect(() => {
     if (wavesurfer) {
-      if (selectedRecording.path) {
-        wavesurfer.load(selectedRecording.path);
-
-        wavesurfer.on('ready', () => {
-          wavesurfer.play()
-          wavesurfer.on('finish', skipToNextRecording)
-        })
-      }
+      requestPlay()
     }
-  }, [selectedRecording, wavesurfer]);
-
+  }, [selectedRecording.path, requestPlay, wavesurfer])
 
   const togglePlay = () => {
-    if (wavesurfer) {
-      wavesurfer.playPause();
+    if (!hasStartedPlaying) {
+      // this we only need to change the play button to a next button - no effects
+      setHasStartedPlaying(true)
+    }
+
+    if (wavesurfer.isPlaying()) {
+      wavesurfer.pause();
+    } else {
+      requestPlay()
     }
   };
 
@@ -88,7 +116,7 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
         </div>
       </div>
       <div className={audio.playerButtons}>
-        <button className={audio.playerButtonForward} onClick={() => skipToNextRecording()}></button>
+        <button className={hasStartedPlaying ? audio.playerButtonForward : audio.playerButtonPlay} onClick={() => hasStartedPlaying ? skipToNextRecording() : togglePlay()}></button>
       </div>
     </div>
   );
