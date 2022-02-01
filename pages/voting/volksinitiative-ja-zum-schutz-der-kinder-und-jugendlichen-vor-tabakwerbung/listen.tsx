@@ -13,8 +13,6 @@ import headings from "../../../assets/styles/Typo.module.scss"
 import container from "../../../assets/styles/Container.module.scss"
 import button from "../../../assets/styles/Button.module.scss"
 
-import { fetchForm } from '../../../utils/fetchForm';
-import { fetchForms } from '../../../utils/fetchForms';
 import { Recording } from '../../../models/types';
 
 import React, { useMemo, useState } from 'react';
@@ -29,15 +27,6 @@ export interface NextConfig {
 }
 
 export async function getStaticProps() {
-  if (process.env.NODE_ENV === 'production') {
-    const formIds = await fetchForms(nextConfig)
-    for (const formId of formIds) {
-      await fetchForm(nextConfig, formId)
-    }
-  }
-
-
-
   const formMap = new Map<string, Map<string, Recording>>()
 
   // Read forms file

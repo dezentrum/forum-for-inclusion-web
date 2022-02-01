@@ -23,6 +23,17 @@ export interface NextConfig {
   reactStrictMode: boolean;
 }
 
+export async function getStaticProps() {
+  if (process.env.NODE_ENV === 'production') {
+    const formIds = await fetchForms(nextConfig)
+    for (const formId of formIds) {
+      await fetchForm(nextConfig, formId)
+    }
+  }
+
+  return { props: {} }
+}
+
 export default function Home() {
   return (
     <div>
