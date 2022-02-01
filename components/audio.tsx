@@ -21,6 +21,10 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
     }
   }, [shouldDestroyWavesurfer, wavesurfer])
 
+  useEffect(() => {
+    setSelectedRecording(recordings[0])
+  }, [recordings])
+
   // STEP 0: Load wavesurfer
   useEffect(() => {
     if (waveformRef.current) {
