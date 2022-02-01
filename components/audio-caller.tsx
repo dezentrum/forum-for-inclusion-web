@@ -8,6 +8,6 @@ const Audio = dynamic(
     { ssr: false }
 )
 
-export const AudioCaller =  ({ recordings }: { recordings: Recording[] }) => {
-    return <Audio recordings={recordings}/>
+export const AudioCaller =  ({ recordings, shouldDestroyWavesurfer }: { recordings: Recording[], shouldDestroyWavesurfer: boolean }) => {
+    return <Audio recordings={recordings} shouldDestroyWavesurfer={shouldDestroyWavesurfer} />
 }

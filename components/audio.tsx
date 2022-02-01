@@ -5,13 +5,21 @@ import WaveSurfer from "wavesurfer.js";
 
 import audio from "./audio.module.scss";
 import container from "../assets/styles/Container.module.scss"
+import { useRouter } from "next/dist/client/router";
 
-export default function Audio({ recordings }: { recordings: Recording[] }) {
+export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordings: Recording[], shouldDestroyWavesurfer: boolean }) {
+  const router = useRouter()
   const waveformRef = useRef(null);
   const [wavesurfer, setWavesurfer] = useState<any | undefined>(undefined);
   const [selectedRecording, setSelectedRecording] = useState<Recording>(recordings[0]);
   const [hasStartedPlaying, setHasStartedPlaying] = useState<boolean>(false);
   const [wavesurferHasLoaded, setWavesurferHasLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (shouldDestroyWavesurfer && wavesurfer) {
+      wavesurfer.destroy()
+    }
+  }, [shouldDestroyWavesurfer, wavesurfer])
 
   // STEP 0: Load wavesurfer
   useEffect(() => {
@@ -39,7 +47,7 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
 
   // STEP 1: Load initial recording
   useEffect(() => {
-    if (wavesurfer) {
+    if (wavesurfer && recordings.length > 0 && recordings[0].path) {
       wavesurfer.load(recordings[0].path);
     }
   }, [wavesurferHasLoaded, recordings, wavesurfer])
@@ -53,7 +61,6 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
 
     if (recordings[findCurrentIndex() + 1]) { // if there is a next recording
       // problem here
-      console.log('updating index... current: ', findCurrentIndex(), ', next: ' , findCurrentIndex() + 1)
       setSelectedRecording(recordings[findCurrentIndex() + 1])
     } else {
       // problem not here
@@ -72,9 +79,9 @@ export default function Audio({ recordings }: { recordings: Recording[] }) {
       wavesurfer.on('ready', () => {
         wavesurfer.play()
       })
-  
+
       wavesurfer.on('finish', skipToNextRecording)
-  
+
       wavesurfer.load(selectedRecording.path);
     }
   }, [skipToNextRecording, wavesurfer, hasStartedPlaying, selectedRecording.path])
