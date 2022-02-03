@@ -48,7 +48,7 @@ export default function Home() {
               <AudioPlaceholder></AudioPlaceholder>
               <div className={page.pageButtonContainer}>
                   <div className={button.primaryPlay}>
-                    <span>Comming Soon</span>
+                    <span>Coming Soon</span>
                   </div>
               </div>
             </div>
