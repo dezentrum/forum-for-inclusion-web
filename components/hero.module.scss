@@ -49,15 +49,22 @@
     display: flex;
     flex-direction: column;
     border-radius: var(--r-inner);
-    background-color: var(--brand);
+    background-color: $color-black;
+    color: var(--brand);
     padding: 9px 20px 11px;
 }
 
 .statsNumber {
     font-size: 40px;
+    @include mq($until: tablet) {
+        font-size: 30px;
+    }
 }
 
 .statsLabel {
+    @include mq($until: tablet) {
+        font-size: 12px;
+    }
 }
 
 .statsSource {
