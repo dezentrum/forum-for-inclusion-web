@@ -23,6 +23,8 @@ export async function fetchQuestion(nextConfig: NextConfig, formId: string, ques
     fs.mkdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, questionId), )
   }
 
+  console.log('Question success')
+
   const filename = `${questionId}.json`
   fs.writeFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, questionId, filename), JSON.stringify(data));
 

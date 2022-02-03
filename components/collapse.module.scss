@@ -1,0 +1,28 @@
+@import '../assets/styles/variables/global.scss';
+
+.wrap {
+    background-color: $color-white;
+    border-radius: var(--r-outer);
+    color: $color-black;
+    padding: var(--s-component);
+    margin-bottom: var(--s-component);
+}
+
+.container {
+    display: flex;
+}
+
+.header {
+    display: flex;
+    background-color: var(--off-white);
+    border-radius: var(--r-inner);
+    padding: 0.24em 0.64em 0.3em;
+}
+
+.content {
+    padding: 0 calc(var(--s-component) / 2);
+
+    p + p {
+        margin-top: 1em;
+    }
+}

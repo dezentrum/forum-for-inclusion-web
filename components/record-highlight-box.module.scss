@@ -1,0 +1,42 @@
+@import '../assets/styles/variables/global.scss';
+@import 'sass-mq';
+
+.wrap {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.inner {
+    display: flex;
+    background-color: rgba($color-white, 0.08);
+    padding: var(--s-component);
+    border-radius: var(--r-outer);
+    @include mq($until: desktop) {
+        flex-direction: column;
+    }
+}
+
+.text {
+    background-color: var(--background);
+    border-radius: var(--r-inner);
+    font-size: var(--font-size-medium);
+    padding: 0.35em 0.588em;
+    @include mq($until: desktop) {
+        font-size: var(--font-size-small);
+    }
+}
+
+.buttonWrap {
+    font-size: var(--font-size-medium);
+    margin-left: var(--s-component);
+    @include mq($until: desktop) {
+        font-size: var(--font-size-small);
+        margin-top: var(--s-component);
+        margin-left: 0;
+        flex-direction: column;
+    }
+}

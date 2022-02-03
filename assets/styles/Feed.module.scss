@@ -1,0 +1,45 @@
+@import 'variables/global';
+
+.selectWrap {
+    display: flex;
+    background-color: rgba($color-white, 0.12);
+    padding: var(--s-component);
+    border-radius: var(--r-outer);
+    margin-bottom: var(--s-small);
+}
+
+.select {
+    position: relative;
+    background-color: rgba($color-black, 0.3);
+    border-radius: var(--r-inner);
+    width: 100%;
+    font-size: var(--font-size-medium);
+    font-family: var(--font-family);
+    color: var(--text);
+    border: none;
+    padding: 6px 10px;
+    appearance: none;
+
+    &::after {
+        content: "";
+        width: 35px;
+        height: 35px;
+        bottom: 0;
+        display: flex;
+        background-color: red;
+    }
+}
+
+.selectIcon {
+    display: inline-flex;
+    background-color: rgba($color-black, 0.3);
+    border-radius: var(--r-inner);
+    margin-left: var(--s-component);
+    width: 34px;
+    justify-content: center;
+
+    &::before {
+        content: url("data:image/svg+xml,%3Csvg width='14' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L7 7.5L13 1.5' stroke='white' stroke-width='2' stroke-linejoin='bevel'/%3E%3C/svg%3E%0A");
+        margin-top: -2px;
+    }
+}

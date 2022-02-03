@@ -1,0 +1,88 @@
+@use "sass:math";
+@import 'variables/global';
+@import 'variables/breakpoints';
+@import 'mixins/rem';
+@import 'mixins/responsive-property';
+@import 'sass-mq';
+@import 'boot/boot';
+@import 'webfonts';
+
+:root {
+  // colors
+  --background: #{$color-black-grey};
+  --text: #{$color-white};
+  --brand: #{$color-poison-green};
+  --off-white: #{$color-light-grey};
+
+  // typography
+  --font-family: 'Everett Medium', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --font-family-heading: 'Everett Extra Bold', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --font-size: #{$global-font-size};
+  --font-size-huge: 48px;
+  --font-size-medium: 17px;
+  --font-size-large: 32px;
+  --font-size-small: 14px;
+  --line-height: #{$global-line-height};
+
+  @include mq($until: tablet) {
+    --font-size: 17px;
+    --font-size-huge: 30px;
+    --font-size-medium: 17px;
+    --font-size-large: 30px;
+    --font-size-small: 12px;
+  }
+
+  // spacings
+  --s-huge: 120px;
+  --s-big: 60px;
+  --s-medium: 40px;
+  --s-small: 8px;
+  --s-component: 4px;
+
+  @include mq($until: tablet) {
+    --s-huge: 30px;
+    --s-big: 30px;
+    --s-medium: 30px;
+    --s-small: 6px;
+    --s-component: 3px;
+  }
+
+  // border radius
+  --r-outer: 14px;
+  --r-inner: 10px;
+
+  @include mq($until: tablet) {
+    --r-outer: 10px;
+    --r-inner: 7px;
+  }
+}
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-family);
+  color: var(--text);
+  background-color: var(--background);
+  font-size: var(--font-size);
+}
+
+main {
+  // padding-top: 60px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-media-controls-enclosure {
+  background-color: var(--off-white);
+  border-radius: var(--r-inner);
+}
+

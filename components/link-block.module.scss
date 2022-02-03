@@ -1,0 +1,41 @@
+@import '../assets/styles/variables/global.scss';
+
+.wrap {
+    background-color: $color-white;
+    border-radius: var(--r-outer);
+    color: $color-black;
+    padding: var(--s-component);
+    cursor: pointer;
+    margin-top: var(--s-medium);
+
+    + .wrap {
+        margin-top: var(--s-component);
+    }
+
+    &:hover {
+        .heading {
+            background-color: darken($color-light-grey, 8%);
+        }
+    }
+}
+
+.container {
+    display: flex;
+    background-color: var(--off-white);
+}
+
+.heading {
+    display: flex;
+    background-color: var(--off-white);
+    border-radius: var(--r-inner);
+    padding: 0.24em 0.825em 0.3em;
+    transition: all 0.2s ease-out;
+}
+
+.content {
+    padding: 0 calc(var(--s-component) / 2);
+
+    p + p {
+        margin-top: 1em;
+    }
+}

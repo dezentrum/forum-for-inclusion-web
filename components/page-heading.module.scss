@@ -1,0 +1,7 @@
+@import '../assets/styles/variables/global.scss';
+
+.container {
+    margin-top: var(--s-medium);
+    margin-bottom: var(--s-huge);
+    color: var(--brand);
+}

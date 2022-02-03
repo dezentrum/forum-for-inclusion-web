@@ -16,6 +16,7 @@ export async function fetchForm(nextConfig: NextConfig, formId: string): Promise
 
   const res = await fetch(`${process.env.VIDEOASK_API_BASE_URL}/forms/${formId}`, requestOptions);
   const data = await res.json();
+  console.log('form endpoint success')
 
   try {
     fs.readdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId))
