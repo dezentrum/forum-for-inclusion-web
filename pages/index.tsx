@@ -12,9 +12,6 @@ import container from "../assets/styles/Container.module.scss"
 import typo from "../assets/styles/Typo.module.scss"
 import button from "../assets/styles/Button.module.scss"
 
-import { fetchForm } from '../utils/fetchForm';
-import { fetchForms } from '../utils/fetchForms';
-
 // ...holds access token
 const nextConfig: NextConfig = getConfig();
 
@@ -23,14 +20,8 @@ export interface NextConfig {
   reactStrictMode: boolean;
 }
 
-export async function getStaticProps() {
-  if (process.env.NODE_ENV === 'production') {
-    const formIds = await fetchForms(nextConfig)
-    for (const formId of formIds) {
-      await fetchForm(nextConfig, formId)
-    }
-  }
 
+export async function getStaticProps() {
   return { props: {} }
 }
 
@@ -50,17 +41,15 @@ export default function Home() {
         <Hero></Hero>
         <div className={container.pageContainer}>
           <div className={page.pageContent}>
-            <p className={typo.text}>«Forum for Inclusion» gibt diesen Personen eine Stimme. Keine demokratische, sondern die Möglichkeit ihre wortwörtliche Stimme zu aktuellen Abstimmungen zu geben.</p>
+            <p className={typo.text}>Das Forum for Inclusion gibt Ausgeschlossenen eine Stimme. Zwar keine demokratische, aber doch hörbar. Mittels Sprachnachrichten teilen Menschen ihre Meinung, die sonst nichts zu sagen haben. Und wir alle diskutieren über die Stimmberechtigung in der Schweiz.</p>
             <div className={page.pagePlaceholders}>
               <AudioPlaceholder></AudioPlaceholder>
               <AudioPlaceholder></AudioPlaceholder>
               <AudioPlaceholder></AudioPlaceholder>
               <div className={page.pageButtonContainer}>
-                <Link href="/feed">
                   <div className={button.primaryPlay}>
-                    <span>Anhören</span>
+                    <span>Comming Soon</span>
                   </div>
-                </Link>
               </div>
             </div>
           </div>
