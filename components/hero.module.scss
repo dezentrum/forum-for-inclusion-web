@@ -36,7 +36,7 @@
 }
 
 .statsIncluded {
-    width: calc(63% - 2px);
+    width: calc(65% - 2px);
     display: flex;
     flex-direction: column;
     background-color: var(--off-white);
@@ -45,7 +45,7 @@
 }
 
 .statsExcluded {
-    width: calc(37% - 2px);
+    width: calc(35% - 2px);
     display: flex;
     flex-direction: column;
     border-radius: var(--r-inner);
