@@ -7,7 +7,9 @@ export const Hero = () => {
         <div className={hero.container}>
             <div className={hero.inner}>
                 <div className={container.pageContainer}>
-                    <h1 className={typo.headingBig}>Kein Stimmrecht, aber viel zu sagen - wer ist Teil der Schweizer Demokratie?</h1>
+                    <h1 className={typo.headingBig}>
+                        Kein Stimmrecht, aber viel zu sagen - wer ist Teil der Schweizer Demokratie?
+                    </h1>
                     <p className={hero.text}>35% der Schweizer Bevölkerung kann nicht an nationalen Abstimmungen teilnehmen, von den Entscheiden sind sie aber trotzdem betroffen. Wie demokratisch ist das noch?</p>
                     <div className={hero.statsWrap}>
                         <div className={hero.stats}>
