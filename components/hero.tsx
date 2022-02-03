@@ -7,16 +7,16 @@ export const Hero = () => {
         <div className={hero.container}>
             <div className={hero.inner}>
                 <div className={container.pageContainer}>
-                    <h1 className={typo.headingBig}>Die Schweiz demokratisieren</h1>
-                    <p className={hero.text}>Die Schweiz ist sehr stolz auf ihre direkte Demokratie. Doch 37% der Bewohner:innen sind von demokratischen Wahlen ausgeschlossen.</p>
+                    <h1 className={typo.headingBig}>Kein Stimmrecht, aber viel zu sagen - wer ist Teil der Schweizer Demokratie?</h1>
+                    <p className={hero.text}>35% der Schweizer Bevölkerung kann nicht an nationalen Abstimmungen teilnehmen, von den Entscheiden sind sie aber trotzdem betroffen. Wie demokratisch ist das noch?</p>
                     <div className={hero.statsWrap}>
                         <div className={hero.stats}>
                             <div className={hero.statsIncluded}>
-                                <div className={hero.statsNumber}>63%</div>
+                                <div className={hero.statsNumber}>65%</div>
                                 <div className={hero.statsLabel}>Stimmberechtigte</div>
                             </div>
                             <div className={hero.statsExcluded}>
-                                <div className={hero.statsNumber}>37%</div>
+                                <div className={hero.statsNumber}>35%</div>
                                 <div className={hero.statsLabel}>Kein Stimmrecht</div>
                             </div>
                         </div>
