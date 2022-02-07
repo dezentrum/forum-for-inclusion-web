@@ -18,7 +18,6 @@ export async function fetchForms(nextConfig: NextConfig): Promise<string[]> {
 
   const res = await fetch(`${process.env.VIDEOASK_API_BASE_URL}/forms?limit=0&offset=0&title=`, requestOptions);
   const data = await res.json();
-  console.log('formS endpoint success')
 
   const filename = 'forms.json'
   fs.writeFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', filename), JSON.stringify(data));
