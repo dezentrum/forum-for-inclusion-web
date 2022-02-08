@@ -3,10 +3,15 @@ import * as path from 'path';
 
 import { NextConfig } from "../pages";
 
+interface FormsData {
+  formIds: string[],
+  formCount: number
+}
+
 /*
  Fetch all forms from Videoask (all votes)
 */
-export async function fetchForms(nextConfig: NextConfig): Promise<string[]> {
+export async function fetchForms(nextConfig: NextConfig): Promise<FormsData> {
   const headers = new Headers();
   headers.append("Authorization", `Bearer ${nextConfig.serverRuntimeConfig.store.token}`);
 
@@ -23,5 +28,6 @@ export async function fetchForms(nextConfig: NextConfig): Promise<string[]> {
   fs.writeFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', filename), JSON.stringify(data));
 
   const formIds = data.results.map((form: any) => form.form_id)
-  return formIds
+  const formCount = data.count
+  return { formIds,  formCount }
 }

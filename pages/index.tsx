@@ -26,9 +26,9 @@ export interface NextConfig {
 
 export async function getStaticProps() {
   if (process.env.NODE_ENV === 'production') {
-    const formIds = await fetchForms(nextConfig)
-    for (const formId of formIds) {
-      const contactIds = await fetchContacts(nextConfig, formId)
+    const formData = await fetchForms(nextConfig)
+    for (const formId of formData.formIds) {
+      const contactIds = await fetchContacts(nextConfig, formId, formData.formCount)
       for (const contactId of contactIds) {
         await fetchContact(nextConfig, formId, contactId)
       }

@@ -14,7 +14,6 @@ export async function fetchContact(nextConfig: NextConfig, formId: string, conta
         headers,
         redirect: 'follow'
     };
-
     const res = await fetch(`${process.env.VIDEOASK_API_BASE_URL}/forms/${formId}/contacts/${contactId}?include_answers=true`, requestOptions);
     const data = await res.json();
 
@@ -27,7 +26,7 @@ export async function fetchContact(nextConfig: NextConfig, formId: string, conta
                     fs.readdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, answer.question_id))
                 } catch {
                     fs.mkdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, answer.question_id))
-                }    
+                }
 
                 await downloadAudioFile(nextConfig, formId, answer.question_id, answer.media_id, answer.media_url)
                 break;
