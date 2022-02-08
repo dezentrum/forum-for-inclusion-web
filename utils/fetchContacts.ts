@@ -30,11 +30,9 @@ export async function fetchContacts(nextConfig: NextConfig, formId: string, form
       fs.mkdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId))
     }
 
-    const filename = `${formId}.json`
-
-    fs.writeFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, filename), JSON.stringify(data));
-    contactIds = [...contactIds, data.results.map((contact: any) => contact.contact_id)]
+    contactIds = [...contactIds, ...data.results.map((contact: any) => contact.contact_id)]
     offset += contactsLimit
   }
+
   return contactIds
 }

@@ -21,7 +21,6 @@ export async function fetchContact(nextConfig: NextConfig, formId: string, conta
     for (const answer of data.answers) {
         switch (answer.type) {
             case 'audio':
-                console.log('Answer: ', answer)
                 try {
                     fs.readdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, answer.question_id))
                 } catch {

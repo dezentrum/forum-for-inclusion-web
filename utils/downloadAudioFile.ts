@@ -8,8 +8,7 @@ export async function downloadAudioFile(nextConfig: NextConfig, formId: string, 
 
     const questionFolderPath = path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, questionId)
     const locallyAvailableAudioFiles = fs.readdirSync(questionFolderPath);
-    // const filename = `${mediaId}.mp3`
-    const filename = `audio.mp3`
+    const filename = `${mediaId}.mp3`
 
     const downloadFile = () => {
         // ...we need to wrap the asynchronous 'downloading' behaviour into a promise, in order to be able to using async / await, which we need in this case to avoid race conditions.
