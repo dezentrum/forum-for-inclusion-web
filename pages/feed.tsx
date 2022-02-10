@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import getConfig from 'next/config'
 import Head from "next/head";
 
@@ -15,6 +13,7 @@ import { Recording } from '../models/types';
 
 import React, { useMemo, useState } from 'react';
 
+import getRecordingsFromFS from '../utils/getRecordingsFromFS';
 
 // ...holds access token
 const nextConfig: NextConfig = getConfig()
@@ -23,67 +22,8 @@ export interface NextConfig {
   serverRuntimeConfig: { store: { token: string, projectRoot: string } };
   reactStrictMode: boolean;
 }
-
 export async function getStaticProps() {
-  const formMap = new Map<string, Map<string, Recording>>()
-
-  // Read forms file
-
-  // LEVEL 1: FORMS
-  const formsData: any = JSON.parse(fs.readFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', 'forms.json'), { encoding: 'utf8' }));
-  const formTitles: string[] = formsData.results.map((result: any): string => {
-    return result.title
-  })
-
-  // LEVEL 2: FORM = ABSTIMMUNG
-  for (const form of formsData.results) {
-
-    const formId = form.form_id;
-    const formTitle = form.title;
-    const formData: any = JSON.parse(fs.readFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, `${formId}.json`), { encoding: 'utf8' }));
-    const recordingsMap = new Map<string, Recording>();
-
-    // LEVEL 3: QUESTION = EINZELNE FRAGE IN EINEM ABSTIMMUNGSFORM, ZB AUDIO ODER GRUPPE
-    for (const question of formData.questions) {
-      const questionId = question.question_id
-      const questionData: any = JSON.parse(fs.readFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, questionId, `${questionId}.json`), { encoding: 'utf8' }));
-
-      for (const answer of questionData.results) {
-        switch (answer.type) {
-          case 'poll':
-            for (const pollAnswer of questionData.results) {
-              recordingsMap.set(pollAnswer.contact_id, { ...recordingsMap.get(pollAnswer.contact_id), tags: pollAnswer.poll_options.map((pollOption: any) => pollOption.content), voting: formTitle })
-            }
-          case 'audio':
-            for (const audioAnswer of questionData.results) {
-              if (audioAnswer.media_id) {
-                recordingsMap.set(audioAnswer.contact_id, { ...recordingsMap.get(audioAnswer.contact_id), path: path.join('forms', formId, questionId, `${audioAnswer.media_id}.mp3`), voting: formTitle })
-              }
-            }
-          default:
-            break
-        }
-
-        // TODO: Remove from map if the path property is not there
-        if (recordingsMap.get(answer.contact_id)?.path === undefined) {
-          recordingsMap.delete(answer.contact_id)
-        }
-      }
-
-
-    }
-    formMap.set(formId, recordingsMap)
-  }
-
-
-  const votings = Array.from(formMap.values())
-
-  let recordings: any[] = []
-
-  for (const voting of votings) {
-    recordings = recordings.concat(Array.from(voting.values()))
-  }
-
+  const recordings = getRecordingsFromFS(nextConfig.serverRuntimeConfig.store.projectRoot);
   return {
     props: { recordings }
   }

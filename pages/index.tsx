@@ -12,8 +12,10 @@ import container from "../assets/styles/Container.module.scss"
 import typo from "../assets/styles/Typo.module.scss"
 import button from "../assets/styles/Button.module.scss"
 
-import { fetchForm } from '../utils/fetchForm';
 import { fetchForms } from '../utils/fetchForms';
+import { fetchForm } from '../utils/fetchForm';
+import { fetchContacts } from '../utils/fetchContacts';
+import { fetchContact } from '../utils/fetchContact';
 
 // ...holds access token
 const nextConfig: NextConfig = getConfig();
@@ -25,9 +27,13 @@ export interface NextConfig {
 
 export async function getStaticProps() {
   if (process.env.NODE_ENV === 'production') {
-    const formIds = await fetchForms(nextConfig)
-    for (const formId of formIds) {
+    const formData = await fetchForms(nextConfig)
+    for (const formId of formData.formIds) {
       await fetchForm(nextConfig, formId)
+      const contactIds = await fetchContacts(nextConfig, formId, formData.formCount)
+      for (const contactId of contactIds) {
+        await fetchContact(nextConfig, formId, contactId)
+      }
     }
   }
 
