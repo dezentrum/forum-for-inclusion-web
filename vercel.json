@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "pages/feed.tsx": {
+      "includeFiles": "pubclic/forms/**"
+    },
+    "pages/index.tsx": {
+      "includeFiles": "pubclic/forms/**"
+    }
+  }
+}
