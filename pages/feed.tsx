@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import getConfig from 'next/config'
 import Head from "next/head";
 
@@ -15,6 +13,7 @@ import { Recording } from '../models/types';
 
 import React, { useMemo, useState } from 'react';
 
+import getRecordingsFromFS from '../utils/getRecordingsFromFS';
 
 // ...holds access token
 const nextConfig: NextConfig = getConfig()
@@ -24,37 +23,7 @@ export interface NextConfig {
   reactStrictMode: boolean;
 }
 export async function getStaticProps() {
-  // Read forms file
-
-  // LEVEL 1: FORMS
-  const formsData: any = JSON.parse(fs.readFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', 'forms.json'), { encoding: 'utf8' }));
-  const formTitles: string[] = formsData.results.map((result: any): string => {
-    return result.title
-  })
-  const recordings: Recording[] = []
-
-  // LEVEL 2: FORM = ABSTIMMUNG
-  for (const form of formsData.results) {
-    const formId = form.form_id;
-    const formTitle = form.title;
-    const formData: any = JSON.parse(fs.readFileSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, `${formId}.json`), { encoding: 'utf8' }));
-
-    // LEVEL 3: QUESTION = EINZELNE FRAGE IN EINEM ABSTIMMUNGSFORM, ZB AUDIO ODER GRUPPE
-    for (const question of formData.questions) {
-      const questionId = question.question_id
-
-      try {
-        console.log('success')
-        const mediaFolderContents = fs.readdirSync(path.join(nextConfig.serverRuntimeConfig.store.projectRoot, 'public', 'forms', formId, questionId))
-        for (const mediaFilePath of mediaFolderContents) {
-          recordings.push({ path: path.join('forms', formId, questionId, mediaFilePath), voting: formTitle })
-        }
-      } catch {
-
-      }
-    }
-  }
-
+  const recordings = getRecordingsFromFS(nextConfig.serverRuntimeConfig.store.projectRoot);
   return {
     props: { recordings }
   }
@@ -65,8 +34,6 @@ interface FeedProps {
 }
 
 export default function Feed({ recordings }: FeedProps) {
-  console.log('Recordings: ', recordings)
-
   const [selectedVoting, setSelectedVoting] = useState<string | null>('All')
   const [shouldDestroyWavesurfer, setShouldDestroyWavesurfer] = useState(false)
 
