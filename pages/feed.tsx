@@ -53,10 +53,10 @@ export async function getStaticProps() {
 
       }
     }
+  }
 
-    return {
-      props: { recordings }
-    }
+  return {
+    props: { recordings }
   }
 }
 
