@@ -25,6 +25,8 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
     setSelectedRecording(recordings[0])
   }, [recordings])
 
+  // console.log(selectedRecording)
+
   // STEP 0: Load wavesurfer
   useEffect(() => {
     if (waveformRef.current) {
@@ -68,7 +70,7 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
       setSelectedRecording(recordings[findCurrentIndex() + 1])
     } else {
       // problem not here
-      console.log('return to start')
+      // console.log('return to start')
       setSelectedRecording(recordings[0])
     }
   }, [wavesurfer, findCurrentIndex, recordings])
