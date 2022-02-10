@@ -37,7 +37,6 @@ export async function getStaticProps() {
     }
   }
 
-export async function getStaticProps() {
   return { props: {} }
 }
 
@@ -62,15 +61,16 @@ export default function Home() {
               <AudioPlaceholder></AudioPlaceholder>
               <AudioPlaceholder></AudioPlaceholder>
               <AudioPlaceholder></AudioPlaceholder>
-              <div className={page.pageButtonContainer}>
-                  <div className={button.primaryPlay}>
-                    <span>Coming Soon</span>
-                  </div>
-              </div>
+              <Link href="/feed">
+                <div className={page.pageButtonContainer}>
+                    <div className={button.primaryPlay}>
+                      <span>Anhören</span>
+                    </div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
-
       </main>
     </div>
   );
