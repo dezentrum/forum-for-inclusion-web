@@ -23,18 +23,9 @@ export default function Home() {
       <main>
         <div className={container.pageContainer}>
           <PageHeading title="Neue Aufnahme"></PageHeading>
-          <p>Zu welcher Abstimmung möchtest du deine Meinung aufnehmen?</p>
-          <LinkBlock link={`/voting/volksinitiative-ja-zum-tier-und-menschenversuchsverbot`}>
-            <p>Volksinitiative «Ja zum Tier- und Menschenversuchsverbot»</p>
-          </LinkBlock>
-          <LinkBlock link={`/voting/volksinitiative-ja-zum-schutz-der-kinder-und-jugendlichen-vor-tabakwerbung`}>
-            <p>Volksinitiative «Ja zum Schutz der Kinder und Jugendlichen vor Tabakwerbung»</p>
-          </LinkBlock>
-          <LinkBlock link={`/voting/aenderung-des-bundesgesetzes-ueber-die-stempelabgaben`}>
-            <p>Änderung des Bundesgesetzes über die Stempelabgaben</p>
-          </LinkBlock>
-          <LinkBlock link={`/voting/bundesgesetz-ueber-ein-massnahmenpaket-zugunsten-der-medien`}>
-            <p>Bundesgesetz über ein Massnahmenpaket zugunsten der Medien</p>
+          <p>Wozu möchtest du deine Meinung aufnehmen?</p>
+          <LinkBlock link={`/voting/statements/`}>
+            <p>Wer sollte am politischen Prozess in der Schweiz mitbestimmen dürfen?</p>
           </LinkBlock>
         </div>
       </main>
