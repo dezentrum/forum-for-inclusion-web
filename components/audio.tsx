@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback, useLayoutEffect } from "react";
 import { Recording } from "../models/types";
 // @ts-ignore
 import WaveSurfer from "wavesurfer.js";
@@ -94,7 +94,7 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (wavesurfer) {
       requestPlay(hasStartedPlaying)
     }
@@ -114,7 +114,10 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
     if (wavesurfer.isPlaying()) {
       wavesurfer.pause();
     } else {
-      requestPlay(true)
+      if (!hasStartedPlaying) {
+        wavesurfer.on('finish', skipToNextRecording)
+      }
+      play()
     }
   };
 
