@@ -8,12 +8,14 @@ import container from "../assets/styles/Container.module.scss"
 import { useRouter } from "next/dist/client/router";
 
 export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordings: Recording[], shouldDestroyWavesurfer: boolean }) {
-  const router = useRouter()
   const waveformRef = useRef(null);
   const [wavesurfer, setWavesurfer] = useState<any | undefined>(undefined);
   const [selectedRecording, setSelectedRecording] = useState<Recording>(recordings[0]);
   const [hasStartedPlaying, setHasStartedPlaying] = useState<boolean>(false);
   const [wavesurferHasLoaded, setWavesurferHasLoaded] = useState<boolean>(false);
+
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent || '') ||
+    /iPad|iPhone|iPod/i.test(navigator.userAgent || '');
 
   useEffect(() => {
     if (shouldDestroyWavesurfer && wavesurfer) {
@@ -25,13 +27,12 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
     setSelectedRecording(recordings[0])
   }, [recordings])
 
-  // console.log(selectedRecording)
-
   // STEP 0: Load wavesurfer
   useEffect(() => {
     if (waveformRef.current) {
       const wavesurfer = WaveSurfer.create({
         container: waveformRef.current,
+        backend: isSafari ? 'MediaElement' : 'WebAudio',
         height: 64,
         barWidth: 3,
         barHeight: 0.2,
@@ -66,37 +67,43 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
     wavesurfer.un('finish', skipToNextRecording)
 
     if (recordings[findCurrentIndex() + 1]) { // if there is a next recording
-      // problem here
       setSelectedRecording(recordings[findCurrentIndex() + 1])
     } else {
-      // problem not here
-      // console.log('return to start')
       setSelectedRecording(recordings[0])
     }
   }, [wavesurfer, findCurrentIndex, recordings])
 
-  const requestPlay = useCallback(() => {
+  const requestPlay = (shouldStartPlaying: boolean) => {
     if (!selectedRecording.path) {
       skipToNextRecording()
       return
     }
 
-    if (hasStartedPlaying) {
-      wavesurfer.on('ready', () => {
-        wavesurfer.play()
-      })
+    if (shouldStartPlaying) {
+      if (selectedRecording.path === recordings[0].path) {
+        play()
+      } else {
+        wavesurfer.on('ready', play)
+      }
 
       wavesurfer.on('finish', skipToNextRecording)
 
-      wavesurfer.load(selectedRecording.path);
+      if (selectedRecording.path !== recordings[0].path) {
+        wavesurfer.load(selectedRecording.path);
+      }
     }
-  }, [skipToNextRecording, wavesurfer, hasStartedPlaying, selectedRecording.path])
+  }
 
   useEffect(() => {
     if (wavesurfer) {
-      requestPlay()
+      requestPlay(hasStartedPlaying)
     }
-  }, [selectedRecording.path, requestPlay, wavesurfer])
+  }, [selectedRecording.path, wavesurfer])
+
+  const play = () => {
+    wavesurfer.play()
+    wavesurfer.un('ready', play)
+  }
 
   const togglePlay = () => {
     if (!hasStartedPlaying) {
@@ -107,7 +114,7 @@ export default function Audio({ recordings, shouldDestroyWavesurfer }: { recordi
     if (wavesurfer.isPlaying()) {
       wavesurfer.pause();
     } else {
-      requestPlay()
+      requestPlay(true)
     }
   };
 

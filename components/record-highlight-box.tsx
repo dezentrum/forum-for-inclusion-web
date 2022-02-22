@@ -19,7 +19,7 @@ export const RecordHighlightBox =  ({ onChangeRoute }: { onChangeRoute: () => vo
             <div className={container.pageContainer}>
                 <div className={style.inner}>
                     <div className={style.text}>
-                        <p>Gehörtst du selber zu einer Gruppe von Menschen die von direkter politischer Partizipation ausgeschlossen sind? Dann nimm deine Eigene Meinung zu einer aktuellen nationalen Abstimmung auf.</p>
+                        <p>Gehörst du selber zu einer Gruppe von Menschen die von direkter politischer Partizipation ausgeschlossen sind? Dann nimm deine Eigene Meinung zu einer aktuellen nationalen Abstimmung auf.</p>
                     </div>
                     <div className={style.buttonWrap}>
                         <div onClick={routeToRecordPage}>
