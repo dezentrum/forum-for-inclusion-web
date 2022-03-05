@@ -24,8 +24,32 @@ export default function Home() {
         <div className={container.pageContainer}>
           <PageHeading title="Neue Aufnahme"></PageHeading>
           <p>Wozu möchtest du deine Meinung aufnehmen?</p>
+          <h3 className={typo.headingSection}>Generelle Statements</h3>
           <LinkBlock link={`/voting/statements/`}>
             <p>Wer sollte am politischen Prozess in der Schweiz mitbestimmen dürfen?</p>
+          </LinkBlock>
+          <h3 className={typo.headingSection}>Nationale Abstimmungen (Comming Soon)</h3>
+          <LinkBlock link="">
+            <p>Änderung vom 1. Oktober 2021 des Bundesgesetzes über Filmproduktion und Filmkultur</p>
+          </LinkBlock>
+          <LinkBlock link="">
+            <p>Änderung vom 1. Oktober 2021 des Bundesgesetzes über die Transplantation von Organen, Geweben und ZeIlen</p>
+          </LinkBlock>
+          <LinkBlock link="">
+            <p>Bundesbeschluss vom 1. Oktober 2021 über die Genehmigung und die Umsetzung des Notenaustausches zwischen der Schweiz und der EU betreffend die Übernahme der Verordnung (EU) 2019/1896 über die Europäische Grenz- und Küstenwache und zur Aufhebung der Verordnungen (EU) Nr. 1052/2013 und (EU) 2016/1624</p>
+          </LinkBlock>
+          <h3 className={typo.headingSection}>Kantonale Abstimmungen ZH (Comming Soon)</h3>
+          <LinkBlock link="">
+            <p>Klimaschutzartikel</p>
+          </LinkBlock>
+          <LinkBlock link="">
+            <p>Stimm- und Wahlrechtsalter 16</p>
+          </LinkBlock>
+          <LinkBlock link="">
+            <p>Kantonales Bürgerrechtsgesetz</p>
+          </LinkBlock>
+          <LinkBlock link="">
+            <p>Kantonale Volksinitiative «für eine Elternzeit (Elternzeit-Initiative)»</p>
           </LinkBlock>
         </div>
       </main>

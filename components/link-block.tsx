@@ -9,11 +9,16 @@ export const LinkBlock = ({ link, children }: { link: string, children: ReactNod
     return (
         <div className={ styles.wrap }>
             <div className={ styles.heading }>
-                <Link href={ encodeURI(link) }>
-                    <div>
-                        { children }
-                    </div>
-                </Link>
+                { link.length ?
+                    <Link href={ encodeURI(link)}>
+                        <div>
+                            { children }
+                        </div>
+                    </Link>
+                 : <div>
+                     { children }
+                 </div>
+                }
             </div>
         </div>
     )

@@ -12,6 +12,13 @@
     @include font-size(14px);
 }
 
+.headingSmall {
+    @include font-size(22px);
+    font-family: var(--font-family);
+    font-weight: normal;
+    line-height: 1.1;
+}
+
 .headingMedium {
     @include font-size(22px);
     @include resp(font-size, (phone: 22px, phone-plus: 24px, phablet: 28px, tablet: 30px, desktop: 32px));
@@ -28,4 +35,9 @@
     font-size: 48px;
     font-family: var(--font-family-heading);
     font-weight: normal;
+}
+
+.headingSection {
+    @extend .headingSmall;
+    margin-top: 2em;
 }
