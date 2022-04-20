@@ -25,9 +25,9 @@ export default function Home() {
         <div className={container.pageContainer}>
           <PageHeading title="Los geht's!"></PageHeading>
           <p>
-          «Forum for Inclusion» benutzt im Hintergrund das Online Tool VideoAsk. Um deine Meinung mit deiner Stimme aufzunehmen, leiten wir dich auf das Aufnahmeformular weiter.
+            «Forum for Inclusion» benutzt im Hintergrund das Online Tool VideoAsk. Um deine Meinung mit deiner Stimme aufzunehmen, leiten wir dich auf das Aufnahmeformular weiter.
           </p>
-          <Link href="https://www.videoask.com/f7y09opix">
+          <Link href="https://www.videoask.com/fpo1knn5t">
             <div className={ button.recordLink }>
               <span>
                 Zur Website für Aufnahme

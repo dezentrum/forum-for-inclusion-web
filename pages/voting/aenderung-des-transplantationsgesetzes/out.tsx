@@ -27,7 +27,7 @@ export default function Home() {
           <p>
             «Forum for Inclusion» benutzt im Hintergrund das Online Tool VideoAsk. Um deine Meinung mit deiner Stimme aufzunehmen, leiten wir dich auf das Aufnahmeformular weiter.
           </p>
-          <Link href="https://www.videoask.com/fivcqs9eo">
+          <Link href="https://www.videoask.com/fyxpra19a">
             <div className={ button.recordLink }>
               <span>
                 Zur Website für Aufnahme
