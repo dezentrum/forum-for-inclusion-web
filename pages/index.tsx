@@ -1,43 +1,47 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import getConfig from 'next/config'
+import * as fs from "fs";
+import * as path from "path";
+import getConfig from "../lib/config";
 import Head from "next/head";
-import Link from 'next/link';
+import Link from "next/link";
 
-import { Hero } from '../components/hero';
-import { AudioPlaceholder } from '../components/audio-placeholder';
+import { Hero } from "../components/hero";
+import { AudioPlaceholder } from "../components/audio-placeholder";
 
-import page from '../assets/styles/Home.module.scss';
-import container from "../assets/styles/Container.module.scss"
-import typo from "../assets/styles/Typo.module.scss"
-import button from "../assets/styles/Button.module.scss"
+import page from "../assets/styles/Home.module.scss";
+import container from "../assets/styles/Container.module.scss";
+import typo from "../assets/styles/Typo.module.scss";
+import button from "../assets/styles/Button.module.scss";
 
-import { fetchForms } from '../utils/fetchForms';
-import { fetchForm } from '../utils/fetchForm';
-import { fetchContacts } from '../utils/fetchContacts';
-import { fetchContact } from '../utils/fetchContact';
+import { fetchForms } from "../utils/fetchForms";
+import { fetchForm } from "../utils/fetchForm";
+import { fetchContacts } from "../utils/fetchContacts";
+import { fetchContact } from "../utils/fetchContact";
 
 // ...holds access token
 const nextConfig: NextConfig = getConfig();
 
 export interface NextConfig {
-  serverRuntimeConfig: { store: { token: string, projectRoot: string }};
+  serverRuntimeConfig: { store: { token: string; projectRoot: string } };
   reactStrictMode: boolean;
 }
 
 export async function getStaticProps() {
-  if ( process.env.NODE_ENV === 'production' ) {
-    const formData = await fetchForms(nextConfig)
+  if (process.env.NODE_ENV === "production") {
+    const formData = await fetchForms(nextConfig);
     for (const formId of formData.formIds) {
-      await fetchForm(nextConfig, formId)
-      const contactIds = await fetchContacts(nextConfig, formId, formData.formCount)
+      await fetchForm(nextConfig, formId);
+      const contactIds = await fetchContacts(
+        nextConfig,
+        formId,
+        formData.formCount,
+      );
       for (const contactId of contactIds) {
-        await fetchContact(nextConfig, formId, contactId)
+        await fetchContact(nextConfig, formId, contactId);
       }
     }
   }
 
-  return { props: {} }
+  return { props: {} };
 }
 
 export default function Home() {
@@ -56,16 +60,21 @@ export default function Home() {
         <Hero></Hero>
         <div className={container.pageContainer}>
           <div className={page.pageContent}>
-            <p className={typo.text}>Das Forum for Inclusion gibt Ausgeschlossenen eine Stimme. Zwar keine demokratische, aber doch hörbar. Mittels Sprachnachrichten teilen Menschen ihre Meinung, die sonst nichts zu sagen haben. Und wir alle diskutieren über die Stimmberechtigung in der Schweiz.</p>
+            <p className={typo.text}>
+              Das Forum for Inclusion gibt Ausgeschlossenen eine Stimme. Zwar
+              keine demokratische, aber doch hörbar. Mittels Sprachnachrichten
+              teilen Menschen ihre Meinung, die sonst nichts zu sagen haben. Und
+              wir alle diskutieren über die Stimmberechtigung in der Schweiz.
+            </p>
             <div className={page.pagePlaceholders}>
               <AudioPlaceholder></AudioPlaceholder>
               <AudioPlaceholder></AudioPlaceholder>
               <AudioPlaceholder></AudioPlaceholder>
               <Link href="/feed">
                 <div className={page.pageButtonContainer}>
-                    <div className={button.primaryPlay}>
-                      <span>Anhören</span>
-                    </div>
+                  <div className={button.primaryPlay}>
+                    <span>Anhören</span>
+                  </div>
                 </div>
               </Link>
             </div>

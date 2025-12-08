@@ -1,4 +1,6 @@
-const store = {}
+/** @type {import('next').NextConfig} */
+
+const store = {};
 
 // ...immediately invoked function expression to generate access token
 const getVideoaskAccessToken = (async () => {
@@ -9,26 +11,46 @@ const getVideoaskAccessToken = (async () => {
   urlEncoded.append("client_secret", process.env.VIDEOASK_CLIENT_SECRET);
 
   const requestOptions = {
-    method: 'POST',
+    method: "POST",
     body: urlEncoded,
-    redirect: 'follow'
+    redirect: "follow",
   };
 
-  const res = await fetch(`${process.env.VIDEOASK_AUTH_BASE_URL}/oauth/token`, requestOptions);
+  const res = await fetch(
+    `${process.env.VIDEOASK_AUTH_BASE_URL}/oauth/token`,
+    requestOptions,
+  );
   const data = await res.json();
 
   // ...validation
   if (data.access_token) {
     store.token = data.access_token;
   } else {
-    console.error('Access Token could not be generated...')
+    console.error("Access Token could not be generated...");
   }
 
   // ...save project root in order to access when saving files to /public folder (e.g. audio), ref: https://stackoverflow.com/questions/54436021/nextjs-public-folder
-  store.projectRoot = __dirname
- })()
+  store.projectRoot = __dirname;
+})();
+
+// Make store available globally for server-side code
+if (typeof global !== "undefined") {
+  global.__store = store;
+}
 
 module.exports = {
-  serverRuntimeConfig: { store },
   reactStrictMode: true,
+  // Sass support configuration
+  sassOptions: {
+    includePaths: ["./styles"],
+    // Suppress deprecation warnings
+    silenceDeprecations: ["import"],
+    quietDeps: true,
+  },
+  // Environment variables accessible in the app
+  env: {
+    PROJECT_ROOT: __dirname,
+  },
+  // Turbopack configuration (empty to use defaults)
+  turbopack: {},
 };

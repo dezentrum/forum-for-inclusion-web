@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import getConfig from 'next/config'
+import getConfig from '../../../lib/config'
 import Head from "next/head";
 import Link from 'next/link';
 

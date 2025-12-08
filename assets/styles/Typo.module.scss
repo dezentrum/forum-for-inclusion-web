@@ -1,43 +1,70 @@
-@import 'sass-mq';
-@import 'variables/breakpoints';
-@import 'mixins/font-size';
-@import 'mixins/responsive-property';
+@use "sass:map";
+@import "sass-mq";
+@import "variables/breakpoints";
+@import "mixins/font-size";
+@import "mixins/responsive-property";
 
 .body {
-    @include font-size(22px);
-    font-family: var(--font-family);
+  font-size: 22px;
+  font-family: var(--font-family);
 }
 
 .small {
-    @include font-size(14px);
+  font-size: 14px;
 }
 
 .headingSmall {
-    @include font-size(22px);
-    font-family: var(--font-family);
-    font-weight: normal;
-    line-height: 1.1;
+  font-size: 22px;
+  font-family: var(--font-family);
+  font-weight: normal;
+  line-height: 1.1;
 }
 
 .headingMedium {
-    @include font-size(22px);
-    @include resp(font-size, (phone: 22px, phone-plus: 24px, phablet: 28px, tablet: 30px, desktop: 32px));
+  font-size: 22px;
+  @media (max-width: map.get($mq-breakpoints, "desktop-plus")) {
     font-size: 32px;
-    font-family: var(--font-family);
-    font-weight: normal;
-    line-height: 1.1;
+  }
+  @media (max-width: map.get($mq-breakpoints, "desktop")) {
+    font-size: 32px;
+  }
+  @media (max-width: map.get($mq-breakpoints, "tablet")) {
+    font-size: 30px;
+  }
+  @media (max-width: map.get($mq-breakpoints, "phablet")) {
+    font-size: 28px;
+  }
+  @media (max-width: map.get($mq-breakpoints, "phone-plus")) {
+    font-size: 24px;
+  }
+  font-size: 22px;
+  font-family: var(--font-family);
+  font-weight: normal;
+  line-height: 1.1;
 }
 
 .headingBig {
-    @include font-size(22px);
-    @include resp(font-size, (phone: 30px, phone-plus: 34px, phablet: 38px, tablet: 42px, desktop: 44px));
-    line-height: 1.1;
-    font-size: 48px;
-    font-family: var(--font-family-heading);
-    font-weight: normal;
+  @media (max-width: map.get($mq-breakpoints, "desktop-plus")) {
+    font-size: 46px;
+  }
+  @media (max-width: map.get($mq-breakpoints, "desktop")) {
+    font-size: 44px;
+  }
+  @media (max-width: map.get($mq-breakpoints, "tablet")) {
+    font-size: 42px;
+  }
+  @media (max-width: map.get($mq-breakpoints, "phablet")) {
+    font-size: 38px;
+  }
+  @media (max-width: map.get($mq-breakpoints, "phone-plus")) {
+    font-size: 34px;
+  }
+  line-height: 1.1;
+  font-family: var(--font-family-heading);
+  font-weight: normal;
 }
 
 .headingSection {
-    @extend .headingSmall;
-    margin-top: 2em;
+  @extend .headingSmall;
+  margin-top: 2em;
 }
