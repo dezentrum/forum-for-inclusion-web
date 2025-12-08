@@ -1,4 +1,6 @@
 {
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
   "functions": {
     "pages/feed.tsx": {
       "includeFiles": "public/forms/**"
