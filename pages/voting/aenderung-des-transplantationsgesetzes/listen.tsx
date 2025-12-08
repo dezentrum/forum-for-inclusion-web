@@ -27,9 +27,14 @@ export interface NextConfig {
   reactStrictMode: boolean;
 }
 export async function getStaticProps() {
-  const recordings = getRecordingsFromFS(nextConfig.serverRuntimeConfig.store.projectRoot);
-  return {
-    props: { recordings }
+  try {
+      const recordings = getRecordingsFromFS(nextConfig.serverRuntimeConfig.store.projectRoot) || [];
+      return {
+          props: { recordings }
+    };
+  } catch (error) {
+    console.error("Error loading recordings:", error);
+    return { props: { recordings: [] } };
   }
 }
 

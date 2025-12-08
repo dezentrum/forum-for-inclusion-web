@@ -27,17 +27,26 @@ export interface NextConfig {
 
 export async function getStaticProps() {
   if (process.env.NODE_ENV === "production") {
-    const formData = await fetchForms(nextConfig);
-    for (const formId of formData.formIds) {
-      await fetchForm(nextConfig, formId);
-      const contactIds = await fetchContacts(
-        nextConfig,
-        formId,
-        formData.formCount,
-      );
-      for (const contactId of contactIds) {
-        await fetchContact(nextConfig, formId, contactId);
+    try {
+      const formData = await fetchForms(nextConfig);
+      if (formData && formData.formIds && formData.formIds.length > 0) {
+        for (const formId of formData.formIds) {
+          await fetchForm(nextConfig, formId);
+          const contactIds = await fetchContacts(
+            nextConfig,
+            formId,
+            formData.formCount,
+          );
+          if (contactIds && contactIds.length > 0) {
+            for (const contactId of contactIds) {
+              await fetchContact(nextConfig, formId, contactId);
+            }
+          }
+        }
       }
+    } catch (error) {
+      console.error("Error during static props generation:", error);
+      // Continue with build even if API calls fail
     }
   }
 

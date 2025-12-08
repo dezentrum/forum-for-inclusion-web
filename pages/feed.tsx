@@ -23,11 +23,19 @@ export interface NextConfig {
   reactStrictMode: boolean;
 }
 export async function getStaticProps() {
-  const recordings = getRecordingsFromFS(
-    nextConfig.serverRuntimeConfig.store.projectRoot,
-  );
+  let recordings: Recording[] = [];
+
+  try {
+    recordings = getRecordingsFromFS(
+      nextConfig.serverRuntimeConfig.store.projectRoot,
+    );
+  } catch (error) {
+    console.error("Error loading recordings:", error);
+    recordings = [];
+  }
+
   return {
-    props: { recordings },
+    props: { recordings: recordings || [] },
   };
 }
 
@@ -35,12 +43,14 @@ interface FeedProps {
   recordings: Recording[];
 }
 
-export default function Feed({ recordings }: FeedProps) {
+export default function Feed({ recordings = [] }: FeedProps) {
   const [selectedVoting, setSelectedVoting] = useState<string | null>("All");
   const [shouldDestroyWavesurfer, setShouldDestroyWavesurfer] = useState(false);
 
   const votingNames = new Set<string>(["All"]);
-  recordings.forEach((recording) => votingNames.add(recording.voting ?? ""));
+  if (recordings && recordings.length > 0) {
+    recordings.forEach((recording) => votingNames.add(recording.voting ?? ""));
+  }
 
   const filteredRecordings = useMemo(() => {
     if (selectedVoting !== "All") {

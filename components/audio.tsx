@@ -22,9 +22,9 @@ export default function Audio({
 }) {
   const waveformRef = useRef(null);
   const [wavesurfer, setWavesurfer] = useState<any | undefined>(undefined);
-  const [selectedRecording, setSelectedRecording] = useState<Recording>(
-    recordings[0],
-  );
+  const [selectedRecording, setSelectedRecording] = useState<
+    Recording | undefined
+  >(recordings && recordings.length > 0 ? recordings[0] : undefined);
   const [hasStartedPlaying, setHasStartedPlaying] = useState<boolean>(false);
   const [wavesurferHasLoaded, setWavesurferHasLoaded] =
     useState<boolean>(false);
@@ -40,7 +40,9 @@ export default function Audio({
   }, [shouldDestroyWavesurfer, wavesurfer]);
 
   useEffect(() => {
-    setSelectedRecording(recordings[0]);
+    if (recordings && recordings.length > 0) {
+      setSelectedRecording(recordings[0]);
+    }
   }, [recordings]);
 
   // STEP 0: Load wavesurfer
@@ -69,16 +71,22 @@ export default function Audio({
 
   // STEP 1: Load initial recording
   useEffect(() => {
-    if (wavesurfer && recordings.length > 0 && recordings[0].path) {
+    if (
+      wavesurfer &&
+      recordings &&
+      recordings.length > 0 &&
+      recordings[0]?.path
+    ) {
       wavesurfer.load(recordings[0].path);
     }
   }, [wavesurferHasLoaded, recordings, wavesurfer]);
 
   const findCurrentIndex = useCallback(() => {
+    if (!selectedRecording || !recordings) return -1;
     return recordings.findIndex(
       (recording) => recording.path === selectedRecording.path,
     );
-  }, [recordings, selectedRecording.path]);
+  }, [recordings, selectedRecording?.path]);
 
   const skipToNextRecording = useCallback(() => {
     wavesurfer.un("finish", skipToNextRecording);
@@ -92,13 +100,17 @@ export default function Audio({
   }, [wavesurfer, findCurrentIndex, recordings]);
 
   const requestPlay = (shouldStartPlaying: boolean) => {
-    if (!selectedRecording.path) {
+    if (!selectedRecording || !selectedRecording.path) {
       skipToNextRecording();
       return;
     }
 
     if (shouldStartPlaying) {
-      if (selectedRecording.path === recordings[0].path) {
+      if (
+        recordings &&
+        recordings[0] &&
+        selectedRecording.path === recordings[0].path
+      ) {
         play();
       } else {
         wavesurfer.on("ready", play);
@@ -106,17 +118,21 @@ export default function Audio({
 
       wavesurfer.on("finish", skipToNextRecording);
 
-      if (selectedRecording.path !== recordings[0].path) {
+      if (
+        recordings &&
+        recordings[0] &&
+        selectedRecording.path !== recordings[0].path
+      ) {
         wavesurfer.load(selectedRecording.path);
       }
     }
   };
 
   useLayoutEffect(() => {
-    if (wavesurfer) {
+    if (wavesurfer && selectedRecording) {
       requestPlay(hasStartedPlaying);
     }
-  }, [selectedRecording.path, wavesurfer]);
+  }, [selectedRecording?.path, wavesurfer]);
 
   const play = () => {
     wavesurfer.play();
@@ -139,6 +155,18 @@ export default function Audio({
     }
   };
 
+  if (!selectedRecording) {
+    return (
+      <div>
+        <div className={audio.container}>
+          <div className={audio.player}>
+            <div className={audio.playerWaveform}>No recordings available</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={audio.container}>
@@ -147,13 +175,13 @@ export default function Audio({
         </div>
         <div className={audio.meta}>
           <ul className={audio.tags}>
-            {selectedRecording.tags?.map((tag: string) => (
+            {selectedRecording?.tags?.map((tag: string) => (
               <li className={audio.tagItem} key={tag}>
                 {tag}
               </li>
             ))}
           </ul>
-          <span className={audio.tagItem}>{selectedRecording.voting}</span>
+          <span className={audio.tagItem}>{selectedRecording?.voting}</span>
         </div>
       </div>
       <div className={audio.playerButtons}>
